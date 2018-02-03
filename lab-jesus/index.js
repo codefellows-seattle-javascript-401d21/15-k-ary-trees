@@ -38,10 +38,10 @@ let treeify = (data) => {
         tag += data[k];
       }
       data = data.slice(k);
-      tree.insert(tag, stack[stack.length - 1]);
+      tree.mostRecent.content = tag;
     }
   }
-  // console.log(tree)
+  delete tree.mostRecent;
   return tree;
 };
 
@@ -54,4 +54,3 @@ fs.readFileProm('./assets/minimal.html')
     fs.writeFileProm('./assets/results.json', data);
   })
   .catch(console.error);
-
