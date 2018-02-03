@@ -1,0 +1,22 @@
+{
+  "name": "15-k-ary-tree",
+  "version": "1.0.0",
+  "description": "use k-ary tree to decompose an HTML document",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Karen Perez",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "debug": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "jest": "^22.1.4"
+  }
+}
