@@ -40,6 +40,13 @@ This app includes an `html-reader` module that reads an html file, parses throug
 
 ---
 
+## Installing and Getting Started
+Fork and git clone this repository to your computer. From your terminal, navigate to `lab-melanie` and type `npm install` to install all necessary packages.
+
+From your terminal, enter `node index.js`, this will create the new json file in the `assets` directory. 
+
+---
+
 ## Data Structures
 
 ### HTML-Reader Module
@@ -52,3 +59,5 @@ This module contains two functions, `parser.readData` and `parser.htmlTree`.
 ---
 
 ## Tests
+
+From your terminal, type `npm run test` to see results of Jest tests.

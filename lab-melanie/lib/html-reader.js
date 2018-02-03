@@ -65,5 +65,3 @@ reader.readData = (file) => {
     })
     .catch(err => new Error(err));
 };
-let file = '../assets/minimal.html';
-reader.readData(file);
