@@ -1,0 +1,15 @@
+{
+  "name": "15-tree-data-structures",
+  "version": "1.0.0",
+  "description": "Lab 15 - Tree Data Structures",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --verbose"
+  },
+  "author": "Steve Carpenter",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "jest": "^22.1.4"
+  }
+}
