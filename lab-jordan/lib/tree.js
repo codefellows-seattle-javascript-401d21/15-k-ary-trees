@@ -46,13 +46,13 @@ const K_ary = module.exports = class {
     return this
   }
 
-  // Removals
-  removeByVal(value) {
-    if(!this.root) return;
-    this.breadthFirst(node => {
-      for (let i = 0; i < node.value.children; i++) {
-        if (node.value.children[i].value === value) return node.value.children.splice(i, 1);
-      }
-    })
-  }
+  // // Removals
+  // removeByVal(value) {
+  //   if(!this.root) return;
+  //   this.breadthFirst(node => {
+  //     for (let i = 0; i < node.value.children; i++) {
+  //       if (node.value.children[i].value === value) return node.value.children.splice(i, 1);
+  //     }
+  //   })
+  // }
 }
