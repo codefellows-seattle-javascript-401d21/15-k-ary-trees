@@ -1,6 +1,6 @@
 'use strict';
 
-// const Queue = require('./queueBuilder');
+const Queue = require('./qeueuBuilder');
 
 const TreeNode = class {
   constructor(val) {
@@ -49,15 +49,6 @@ const K_ary = module.exports = class {
 
     return this;
   }
-
-  // childLess(root) {
-  //   let noChildren = [];
-  //   root.breadthFirst(current => {
-  //     if(!current.children) {
-  //       noChildren.push(current);
-  //     }
-  //   });
-  // }
 
   // Removals
   removeByVal(val) {

@@ -4,49 +4,56 @@ const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'), {suffix: 'Prom'});
 const Tree = require('./treeBuilder');
 
+let treeify = (data) => {
+  let stack = [];
+  let tree = new Tree();
+  let tag;
+  let end = false;
 
-let readData = () => {
-  let title =[];
-  return fs.readFileProm('../assests/minimal.html')
-    .then(res => res.toString())
-    .then(res => res.replace(/>/g, '|'))
-    .then(res => res.replace(/</g, '|'))
-    .then(res => res.replace(/\//g, ''))
-    .then(res => res.split('\n'))
-    .then(res => res.map(i => i.trim()))
-    .then(res => res.map(i => i.split('|').filter(val => val)))
-    .then(res => {
-      for(var i = 0; i < res.length; i++){
-        for(var j = 0; j < res[i].length; j++){
-    
-          title.push(res[i][j]);
-        }
+  while (!end) {
+    data = data.trim();
+    if (data.startsWith('</html>')) end = true;
+
+    // </closing tag>
+    if ( data[0] === '<' && data[1] === '/' ) {
+      tag = '';
+      for (var i = 2; data[i] !== '>'; i++) {
+        tag += data[i];
       }
-    })
+      data = data.slice(i + 1);
+      stack.pop( tag );
+      // console.log('</add>:', stack);
 
-    
-    // .then(res => res.split('<>'))
-    // .then(res => res.map(i => i.split('>')))
-    // .then(res => res.map(i => i.filter(i => i.length > 0)))
-    // .then(res => res.map(i => i.splice(0,1)))
-    // .then(res  => {
-    //   res.splice(0, 1);
-    //   res.splice(res.length - 1, 1);
-    //   return res;
-    // })
+    // <opening tag>
+    } else if ( data[0] === '<' ) {
+      tag = '';
+      for (var j = 1; data[j] !== '>'; j++) {
+        tag += data[j];
+      }
+      data = data.slice(j + 1);
+      // !stack[0] ? tree = new Tree (tag)
+      //   : tree.insert(tag, `${stack[0]}`);
+      stack.push( tag );
+      // console.log('<add>:', stack);
 
-       
-    // .then(res => res.match(/<[^>]*>/))
-    // .then(res => console.log(res))
-    .then(res => answer(title));
+    // content
+    } else {
+      tag = '';
+      for (var k = 0; data[k] !== '<'; k++) {
+        tag += data[k];
+      }
+      data = data.slice(k);
+      console.log('add:', stack);
+      // tree.insert(stack[], 0);
+      // console.log('data', data[1])
+    }
+  }
+  
+  return tree;
 };
 
-readData();
-
-let answer = function(data) {
-  let build = new Tree();
-  build.insert();
-  data.splice(0, 1);
-  console.log(data);
-};
-
+fs.readFileProm('../assests/minimal.html')
+  .then( data => {
+    data = data.toString().split('<!DOCTYPE html>')[1];
+    treeify(data);
+  }).catch( console.error );
