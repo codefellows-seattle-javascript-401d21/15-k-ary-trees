@@ -1,15 +1,15 @@
 'use strict';
 
 const Queue = require('./queue');
-/*
+
 const TreeNode = class {
   constructor(eleName, textContent) {
     this.val = {eN: eleName, tC: textContent};
     this.children = [];
   }
 };
-*/
-const karyTree = module.exports = class {
+
+const karyTree = class {
   constructor() {
     this.root = new TreeNode(null, null);
   }
@@ -40,7 +40,6 @@ const karyTree = module.exports = class {
 
     this.breadthFirst(currentTN => {
       if(parentVal.eN === currentTN.val.eN && parentVal.tC === currentTN.val.tC){
-        //console.log(currentTN);
         currentTN.children.push(newTN);
         return;
       }
@@ -55,18 +54,11 @@ const karyTree = module.exports = class {
     }
 
     this.breadthFirst(currentTN => {
-      //console.log('currentTN ', currentTN);
       if(currentTN.children.length > 0){
-        //console.log('currentTN children has some TN');
         for(let i = 0; i < currentTN.children.length; i++){
-          //console.log('i ', i);
-          if(currentTN.children[i].val.eN === val.eN && currentTN.children[i].val.tC === val.tC){
-            //console.log('Found val!! currentTN.children[i].val ', currentTN.children[0].val);
-            //            currentTN.children.filter(e => {console.log('EEEEEE: ', e); e.val !== val});
+          if(currentTN.children[i].val.eN === eN && currentTN.children[i].val.tC === tC){
             currentTN.children[i].val = {eN: null, tC: null};
             currentTN.children[i].children = [];
-            //console.log('after filtered ', currentTN.children);
-            //            break;
           }
         }
         return;
@@ -83,7 +75,6 @@ const karyTree = module.exports = class {
       return null;
     }
 
-    let currentTN = this.root;
     let resArr = [];
  
     this.breadthFirst(currentTN => {
@@ -96,3 +87,5 @@ const karyTree = module.exports = class {
   }
 
 };
+
+module.exports = {TreeNode, karyTree};

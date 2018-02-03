@@ -1,9 +1,10 @@
 'use strict';
 
-const kTree = require('../lib/kary-tree');
+const kT = require('../lib/kary-tree');
 const solution = require('../lib/solution');
 const htmlTree = solution.htmlTree;
-const treeNode = solution.TreeNode;
+const kTree = kT.karyTree;
+const treeNode = kT.TreeNode;
 const minimalHtmlFilePath = `${__dirname}/assets/minimal.html`;
 const invalidHtmlFilePath = `${__dirname}/assets/invalid.html`;
 const secondInvalidHtmlFilePath = `${__dirname}/assets/secondInvalid.html`;
@@ -66,10 +67,8 @@ describe('Solution module', () => {
 
       test('should return a correct result', () => {
         let res = htmlTree(minimalHtmlFilePath);
-        let i = 0;
         res.breadthFirst(node => {
           expect(node instanceof treeNode).toBe(true);
-          i++;
         });
       });
 

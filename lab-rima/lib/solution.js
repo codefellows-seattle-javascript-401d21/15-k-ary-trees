@@ -1,16 +1,11 @@
 'use strict';
 
 const fs = require('fs');
-const kTree = require('../lib/kary-tree');
+const kT = require('../lib/kary-tree');
+const kTree = kT.karyTree;
+const TreeNode = kT.TreeNode;
 const Stack = require('../lib/stack');
 
-
-const TreeNode = class {
-  constructor(eleName, textContent) {
-    this.val = {eN: eleName, tC: textContent};
-    this.children = [];
-  }
-};
 
 // O(n) - n is a total number of characters in a file. it checks each character so O(n)
 function htmlTree(filePath){
