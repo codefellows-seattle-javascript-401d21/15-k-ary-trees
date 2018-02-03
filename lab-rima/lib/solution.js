@@ -13,7 +13,14 @@ const TreeNode = class {
 }
 
 function htmlTree(filePath){
-  let dataStr = fs.readFileSync(filePath).toString().split(/\r?\n/);
+
+  let dataStr;
+  try{
+    dataStr = fs.readFileSync(filePath).toString().split(/\r?\n/);
+  }catch(err){
+    throw new Error('No such file');
+  }
+
 
   for(let i = 0; i < dataStr.length; i++){
     dataStr[i] = dataStr[i].trim();
@@ -21,7 +28,7 @@ function htmlTree(filePath){
 
   // if html file doesn't start with <!DOCTYPE html> and <html>, thrwo error
   if(dataStr[0] !== '<!DOCTYPE html>' || dataStr[1] !== '<html>'){
-    throw new Error('This html is invalid.');
+    throw new Error('Invalid html');
   }
 
   let parentStack = new Stack();
@@ -43,7 +50,7 @@ function htmlTree(filePath){
       if(currentStr[i] === '<') {
         closed = false;
         if(text.length > 0){
-          parentStack.peek().value.val.tC = text;
+          parentStack.peek().value.val.tC += text;
           text = '';
         }
       }

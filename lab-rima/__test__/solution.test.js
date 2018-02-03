@@ -4,7 +4,10 @@ const kTree = require('../lib/kary-tree');
 const solution = require('../lib/solution');
 const htmlTree = solution.htmlTree;
 const treeNode = solution.TreeNode;
-const minimalHtmlFilePath = './assets/minimal.html';
+const minimalHtmlFilePath = `${__dirname}/assets/minimal.html`;
+const invalidHtmlFilePath = `${__dirname}/assets/invalid.html`;
+const secondInvalidHtmlFilePath = `${__dirname}/assets/secondInvalid.html`;
+
 
 // test data
 const span = new treeNode('span', 'consectetur adipisicing elit, sed do eiusmod');
@@ -40,6 +43,9 @@ html.children = [head, body];
 
 const tags = [html, head, body, title, header, main, footer, h2, nav, section, p1, ul, p2, p3, li1, li2, li3, li4, span];
 
+
+
+
 describe('Solution module', () => {
 
   describe('htmlTree function', () => {
@@ -58,10 +64,29 @@ describe('Solution module', () => {
         });
       });
 
+      test('should return a correct result', () => {
+        let res = htmlTree(minimalHtmlFilePath);
+        let i = 0;
+        res.breadthFirst(node => {
+          expect(node instanceof treeNode).toBe(true);
+          i++;
+        });
+      });
+
     });
 
     describe('Invalid input', () => {
+      test('should throw an error if input content does not start with <!DOCTYPE html>', () => {
+        expect(() => htmlTree(invalidHtmlFilePath)).toThrow('Invalid html');
+      });
 
+      test('should throw an error if input content does not start with <html>', () => {
+        expect(() => htmlTree(secondInvalidHtmlFilePath)).toThrow('Invalid html');
+      });
+
+      test('should throw an error if input file does not exist', () => {
+        expect(() => htmlTree()).toThrow('No such file');
+      });
     });
   });
 });
