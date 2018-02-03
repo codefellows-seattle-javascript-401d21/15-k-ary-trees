@@ -23,6 +23,7 @@ function parseHtml(data) {
   let elements = html.replace(/\n/g,'').replace(/<([^>]+)>/g, '\n<$1>\n')
     .split('\n').filter(elm => elm.trim()).slice(1);
 let tempElm;
+let cleanParent
   var parent = elements[0] //.substr(1);
   console.log(parent);
   elements.forEach(elm => {
@@ -38,9 +39,12 @@ let tempElm;
       //treeInsert.insert(elm. parentStack.head.value);
       tempArr.push([parent, tempElm]);
       //push
-      parentStack.push(parent.replace(/([<</>])/g, ''));
+      cleanParent = parent;
+      parentStack.push(cleanParent.replace(/([<</>])/g, ''));
+      debug('parent', parent);
       debug('parentStack', parentStack);
       if (elm.indexOf('<') !== -1) parent = elm;
+      debug('parent', parent);
     }
     } else {
       debug('element is closing', elm );
