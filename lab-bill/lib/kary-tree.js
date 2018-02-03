@@ -22,7 +22,7 @@ const Kary = module.exports = class {
     while(queue.back) {
       current = queue.dequeue();
 
-    //   console.log('current', current);
+      //   console.log('current', current);
       callback(current);
 
       current.val.children.map(c => queue.enqueue(c));
@@ -48,6 +48,15 @@ const Kary = module.exports = class {
   }
 
   removeByVal(val) {
+
+    this.breadthFirst(node => {
+      if(parent === node.val.val) {
+        node.val.children.pop();
+        return;
+      }
+    });
+  
+    return this;
   }
 };
 
