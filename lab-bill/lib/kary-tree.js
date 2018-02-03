@@ -4,7 +4,7 @@ const Queue = require('./queue');
 
 const TreeNode = class {
   constructor(val) {
-    this.val = val;
+    this.val = {eleName : val.ele, textContent: val.text};
     this.children = []; 
   }
 };
@@ -22,7 +22,7 @@ const Kary = module.exports = class {
     while(queue.back) {
       current = queue.dequeue();
 
-      console.log('current', current);
+    //   console.log('current', current);
       callback(current);
 
       current.val.children.map(c => queue.enqueue(c));
@@ -50,3 +50,15 @@ const Kary = module.exports = class {
   removeByVal(val) {
   }
 };
+
+let tree = new Kary;
+tree.insert(1);
+tree.insert(2, 1);
+tree.insert(3, 2);
+tree.insert(4, 1);
+tree.breadthFirst(console.log);
+// console.dir(tree, {depth: null});
+
+// {  new parent new node
+// {} new node append to current parent
+// } find old parent
