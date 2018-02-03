@@ -1,9 +1,14 @@
 'use strict';
 
 const karyT = require('./lib/kary-tree');
-const htmlTree = require('./lib/solution');
+const solution = require('./lib/solution');
 
 
-let res = htmlTree('./assets/minimal.html');
+let res = solution.htmlTree('./assets/minimal.html');
 
-console.log(res.findBottomNodes());
+res.breadthFirst(node => {
+  console.log('NODE.VAL -> ',node.val);
+//  console.log('NODECHILDREN -> ',node.children);
+});
+
+//console.log(res.findBottomNodes());

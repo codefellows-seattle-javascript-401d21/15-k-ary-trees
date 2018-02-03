@@ -12,16 +12,17 @@ const TreeNode = class {
   }
 }
 
-
-
 function htmlTree(filePath){
   let dataStr = fs.readFileSync(filePath).toString().split(/\r?\n/);
 
-//let arr = dataStr.split(/\r?\n/);
   for(let i = 0; i < dataStr.length; i++){
     dataStr[i] = dataStr[i].trim();
   }
-//console.log(dataStr);
+
+  // if html file doesn't start with <!DOCTYPE html> and <html>, thrwo error
+  if(dataStr[0] !== '<!DOCTYPE html>' || dataStr[1] !== '<html>'){
+    throw new Error('This html is invalid.');
+  }
 
   let parentStack = new Stack();
   let tree = new kTree();
@@ -30,7 +31,7 @@ function htmlTree(filePath){
   parentStack.push(tree.root);
 
 
-  for(let j = 1; j < dataStr.length; j++){
+  for(let j = 2; j < dataStr.length; j++){
   
     let closed = true;
     let tag = '';
@@ -38,40 +39,29 @@ function htmlTree(filePath){
 
     let currentStr = dataStr[j];
     for(let i = 0; i < currentStr.length; i++){
-//console.log(dataStr[j]);
       // tag starts
       if(currentStr[i] === '<') {
-  //console.log('TAG STARTED');
         closed = false;
         if(text.length > 0){
-  //console.log('STACK PEEK ', parentStack.peek());
           parentStack.peek().value.val.tC = text;
           text = '';
         }
       }
       // tag ends
       else if(currentStr[i] === '>'){
-  //console.log('TAG ENDED');
         closed = true;
         if(tag.includes('/')){
-  //console.log('CLOSING TAG ', parentStack.peek());
           if(tag.includes(parentStack.peek().value.val.eN)) parentStack.pop();
         }
         else{
           let newTag = new TreeNode(tag, '');
-  //console.log('tag: ', newTag.val.eN);
-  //console.log(parentStack.peek().value.children);
           (parentStack.peek().value.children).push(newTag);
           parentStack.push(newTag);
         }
         tag = '';
       }
       // char: if tag ended, it is for text. if tag not ended, it is for tag.
-      else if(currentStr[i] !== ' '){
-  //console.log(dataStr[i]);
-        //if(dataStr[i] + dataStr[i+1] === /\r?\n/){
-        //  i++;
-        //}
+      else{// if(currentStr[i] !== ' '){
         if(!closed){
           tag += currentStr[i];
         }
@@ -81,11 +71,8 @@ function htmlTree(filePath){
       }
     }
   }
-
-//  console.log(dataStr.split('<'));
   return tree;
 }
 
 
-
-module.exports = htmlTree;
+module.exports = {TreeNode, htmlTree};
