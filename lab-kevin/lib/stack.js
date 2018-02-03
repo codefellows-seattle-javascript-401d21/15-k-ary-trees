@@ -28,7 +28,7 @@ module.exports = class {
     let top_next = cur_top.next;
     this.top = top_next;
     this.size--;
-    return cur_top.val;
+    return cur_top.value;
   }
   //  Big-O: O(1) 
   

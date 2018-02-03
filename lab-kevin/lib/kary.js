@@ -72,6 +72,33 @@ module.exports = class {
       previous_node = node;
     });
   }
+
+  insertData(val, parent) {
+    let tn = new Tn(val);
+    if (!this.root){
+      this.root =  tn;
+      return this;
+    }
+    console.log('parent', tn);
+    if (parent === undefined) throw new Error('Validation Error: Parent value is undefined.');
+    console.log('parent', tn);
+    if (!this.root.children){
+      this.root.children =  new SLL();
+      this.root.children.insertHead(tn);
+      return this;
+    }
+    this.breadthFirst( node => {
+      console.log('parent', tn);
+      if( parent.eleName === node.value.value.eleName) {
+      
+        if (!node.value.children) node.value.children = new SLL();
+        node.value.children.insertHead(tn);
+        console.log('node.value.children', node.value.children);
+        return this;
+      } 
+    });
+    return this;
+  }
    
 
   breadthFirst(callback){
