@@ -3,7 +3,7 @@
 const Stack = require('./lib/stack.js');
 const SLL = require('./lib/sll.js');
 
-const dedupe = module.exports = function (list) { // O(n), iterates once
+const dedupe = module.exports = function (list) { 
   if (!list.value) return null;
 
   let stack = new Stack;
@@ -15,4 +15,4 @@ const dedupe = module.exports = function (list) { // O(n), iterates once
     }
   }
   return result;
-}
+};
