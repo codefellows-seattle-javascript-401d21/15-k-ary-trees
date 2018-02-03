@@ -4,34 +4,64 @@ const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'), {suffix: 'Prom'});
 const Tree = require('./kary-tree.js');
 
-const  parser = module.exports = {};
+const  reader = module.exports = {};
 
-parser.readData = () => {
-  let tree = new Tree();
-  fs.readFileProm('../assets/minimal.html')
-    .then(res => res.toString())
-    .then(htmldoc =>  htmldoc.split('>'))
-    .then(data => data.map(e => e.trim()))
-    .then(data => data.map(e => e.split('<').join('<')))
-    .then(arr => {
-      for(let i = 1; i < arr.length; i ++) {
-        // console.log(arr[i]);
-        if(arr[i] === arr[1]) {
-          tree.insert('el', arr[i]);
-        }
-        // if(arr[i].startsWith('</')) {
-        //   arr[i] = null;
-        // }
-        if(arr[i].startsWith('<')) {
-          tree.insert('el', arr[i], arr[i - 1]);
-        } else {
-          tree.insert('txt', arr[i], arr[i - 1]);
-        }
+
+reader.htmlTree = html => {
+  if(!html) return null;
+  if(typeof html !== 'string') return null;
+  let end = false;
+  let tree, tag;
+  let stack = [];
+
+  while(!end) {
+    html = html.trim();
+    if(html.startsWith('</html>')) end = true;
+    // console.log(tree);
+
+    if(html[0] === '<' && html[1] === '/') {
+      tag = '';
+      for(var i = 2; html[i] !== '>'; i ++) {
+        tag += html[i];
       }
-      console.log(tree);
-      // return tree;
-    });
- 
+      html = html.slice(i + 1);
+      stack.pop(tag);
+      // console.log('remove', stack);
+
+    } else if(html[0] === '<') {
+      tag = '';
+      for(var j = 1; html[j] !== '>'; j ++) {
+        tag += html[j];
+      }
+      html = html.slice(j + 1);
+      tree === undefined ? tree = new Tree(tag)
+        : tree.insert('element', tag, stack[stack.length - 1]);
+      stack.push(tag);
+      // console.log('add', stack);
+    } else {
+      tag = '';
+      for(var k = 0; html[k] !== '<'; k ++) {
+        tag += html[k];
+      }
+      html = html.slice(k);
+      tree.insert('text', tag, stack[stack.length - 1]);
+      // console.log('add', stack);
+    }
+  }
+  // console.log(tree);
+  return tree;
+
 };
 
-parser.readData();
+reader.readData = (file) => {
+  fs.readFileProm(file)
+    .then(buff => buff.toString())
+    .then(htmldoc =>  {
+      htmldoc.split('<!DOCTYPE html>')[1];
+      return JSON.stringify(reader.htmlTree(htmldoc));
+    })
+    .then( data => {
+      fs.writeFileProm('./assets/results.json', data);
+    })
+    .catch(err => new Error(err));
+};

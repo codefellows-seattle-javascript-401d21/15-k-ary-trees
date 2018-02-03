@@ -1,6 +1,7 @@
 'use strict'; 
 
 const Queue = require('../lib/queue.js');
+require('jest');
 
 describe('Queue Module', function() {
   beforeEach(() => this.queue = new Queue());

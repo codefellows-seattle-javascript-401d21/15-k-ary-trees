@@ -3,9 +3,9 @@
 const Queue = require('./queue');
 
 const TreeNode = class {
-  constructor(type, content) {
+  constructor(type, val) {
     this.type = type;
-    this.content = content;
+    this.val = val;
     this.children = [];
   }
 };
@@ -33,8 +33,8 @@ const K_ary = module.exports = class {
   }
 
   // Insertions
-  insert(val, content, parent) {
-    let tn = new TreeNode(val, content);
+  insert(type, val, parent) {
+    let tn = new TreeNode(type, val);
 
     if(!this.root) {
       this.root = tn;
