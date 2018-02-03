@@ -1,0 +1,26 @@
+{
+  "name": "lab-15",
+  "version": "1.0.0",
+  "description": "binary tree html element text jest test",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest -i"
+  },
+  "keywords": [
+    "binary",
+    "tree",
+    "html",
+    "element",
+    "text",
+    "jest",
+    "test"
+  ],
+  "author": "Jeremy Pearson",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.1"
+  }
+}
