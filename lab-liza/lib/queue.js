@@ -1,37 +1,33 @@
 'use strict';
 
-const Node = require('./node');
+class Node {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
 
-module.exports = class {
+module.exports = class Queue {
   constructor() {
-    this.first = null; //front
-    this.last = null; //back
-    this.maxSize = 1048;
-    this.size = 0;
+    this.front = null;
+    this.back = null;
   }
 
-  enqueue(value) {
-    if (this.size === this.maxSize) throw new Error ('This is an error');
+  enqueue(val) {
+    let node = new Node(val);
 
-    let node = new Node (value);
-
-    this.last ? this.last.next = node : this.first = node;
-    this.last = node;
-
-    this.size++;
-
-    return this.first;
-    //Big-O: O(1)
+    this.back ? this.back.next = node : this.front = node;
+    this.back = node;
+    return this;
   }
 
   dequeue() {
-    let temp = this.first;
-    this.first = this.first.next;
+    if(!this.front && !this.back) throw new Error('Queue is empty.');
 
+    let temp = this.front;
+    this.front = this.front.next;
+    if(!this.front) this.back = null;
     temp.next = null;
-    this.size --;
-
     return temp;
-    //Big-O: O(1)
   }
 };
