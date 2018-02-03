@@ -1,6 +1,7 @@
 'use strict';
 
 const Promise = require('bluebird');
+const uuid = require('uuid/v4');
 const KTree = require('./lib/kary-tree');
 const fs = Promise.promisifyAll(require('fs'), {suffix: 'Prom'});
 
@@ -8,7 +9,7 @@ const fs = Promise.promisifyAll(require('fs'), {suffix: 'Prom'});
 
 let readData = () => {
   let HTMLTree = new KTree();
-  let currentParent; 
+  let emulatedStack = [];
   fs.readFileProm('../assets/minimal.html')
     .then(res => res.toString())
     .then(htmldoc =>  htmldoc.split('>'))
@@ -20,12 +21,42 @@ let readData = () => {
       return data;
     })
     .then(data => data.map(e => e.split('/')))
-    // .then(data => {
-    //   //if array length is 1, set the currentParent to the array element
-    //   //if array length is 2 and first element is blank, do breadthFirst search and check if the current node has any children with the currentParent. (if yes return the current node, if no continue) set currentParent to returned node  
-      
-    // })
-    .then(data => console.log('DATA: ', data));
+    .then(data => {
+      for(let i in data){
+        if(data[i].length===1) {
+          data[i].push(uuid());
+        } else {
+          data[i].push('');
+        }
+      }
+      return data;
+    })
+    .then(data => {
+      for(let i in data){
+        if(data[i].length===2) {
+          //push all opening elements
+          //pop off last opening when closing is found, write uuid from popped off element last element in closing element array
+          emulatedStack.push(data[i]);
+        } else {
+          data[i][data[i].length-1] = emulatedStack.pop()[1];
+        }
+      }
+      return data;
+    })
+    .then(data => {
+      for(let i in data){
+        if(data[i].length===2) {
+          //push all opening elements
+          //pop off last opening when closing is found, write uuid from popped off element last element in closing element array
+          emulatedStack.push(data[i]);
+        }
+      }
+      return data;
+    })
+    .then(data => {
+      // console.log(emulatedStack)
+      console.log('DATA: ', data)
+    });
     
 
 };

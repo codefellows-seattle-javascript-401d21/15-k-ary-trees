@@ -21,6 +21,7 @@
   "author": "Jeremy Pearson",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.5.1"
+    "bluebird": "^3.5.1",
+    "uuid": "^3.2.1"
   }
 }
