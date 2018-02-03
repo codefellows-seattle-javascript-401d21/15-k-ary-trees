@@ -4,10 +4,12 @@ const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'), {suffix: 'Prom'});
 const Tree = require('./kary-tree.js');
 
-const  parser = module.exports = {};
+const  reader = module.exports = {};
 
 
-parser.htmlTree = html => {
+reader.htmlTree = html => {
+  if(!html) return null;
+  if(typeof html !== 'string') return null;
   let end = false;
   let tree, tag;
   let stack = [];
@@ -46,22 +48,22 @@ parser.htmlTree = html => {
       // console.log('add', stack);
     }
   }
-  console.log(tree);
+  // console.log(tree);
   return tree;
 
 };
 
-parser.readData = () => {
-  fs.readFileProm('../assets/minimal.html')
+reader.readData = (file) => {
+  fs.readFileProm(file)
     .then(buff => buff.toString())
     .then(htmldoc =>  {
       htmldoc.split('<!DOCTYPE html>')[1];
-      return JSON.stringify(parser.htmlTree(htmldoc));
+      return JSON.stringify(reader.htmlTree(htmldoc));
     })
     .then( data => {
       fs.writeFileProm('./assets/results.json', data);
     })
-    .catch(console.error);
+    .catch(err => new Error(err));
 };
-
-parser.readData();
+let file = '../assets/minimal.html';
+reader.readData(file);

@@ -47,7 +47,7 @@ This module contains two functions, `parser.readData` and `parser.htmlTree`.
 
 `parser.readData` - reads an html file and reaturns a buffer, converts the buffer to a string, removes the `<!DOCTYPE html>` tag from the file and passed the data to the `parser.htmlTree` function. It then writes a `results.json` file with the tree.
 
-`parser.htmlTree` - takes in the string data from `parser.readData`, creates a stack, and through a series of `if` statements, pushes and pops elements of the html file to/from a stack. It then takes those elements and passes them into a tree node with their proper `type`, `value`, and `parent`. This tree is then sent back to the `parser.readData` function.
+`parser.htmlTree` - a helper function, takes in the string data from `parser.readData`, creates a stack, and through a series of `if` statements, pushes and pops elements of the html file to/from a stack. It then takes those elements and passes them into a tree node with their proper `type`, `value`, and `parent`. This tree is then sent back to the `parser.readData` function.
 
 ---
 
