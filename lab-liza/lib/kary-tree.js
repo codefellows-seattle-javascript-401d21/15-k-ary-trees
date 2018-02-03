@@ -3,13 +3,13 @@
 const Queue = require('./queue');
 
 const TreeNode = class {
-  constructor(val) {
-    this.val = val;
-    this.children = []; 
+  constructor(value) {
+    this.value = value;
+    this.children = [];
   }
 };
 
-const K_ary = module.exports = class {
+const Kary = module.exports = class {
   constructor() {
     this.root = null;
   }
@@ -27,13 +27,13 @@ const K_ary = module.exports = class {
       console.log('current', current);
       callback(current);
 
-      current.val.children.map(c => queue.enqueue(c));
+      current.value.children.map(c => queue.enqueue(c));
     }
   }
 
   // Insertions
-  insert(val, parent) {
-    let tn = new TreeNode(val);
+  insert(value, parent) {
+    let tn = new TreeNode(value);
 
     if(!this.root) {
       this.root = tn;
@@ -41,8 +41,8 @@ const K_ary = module.exports = class {
     }
 
     this.breadthFirst(node => {
-      if(parent === node.val.val) {
-        node.val.children.push(tn);
+      if(parent === node.value.value) {
+        node.value.children.push(tn);
         return;
       }
     });
@@ -51,7 +51,8 @@ const K_ary = module.exports = class {
   }
 
   // Removals
-  removeByVal(val) {
-    // Remove the first node you find that matches val
-  }
+  // removeByVal(value) {
+  //   if(!this.root) return null;
+
+  // }
 };
