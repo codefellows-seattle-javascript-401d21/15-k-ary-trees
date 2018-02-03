@@ -3,9 +3,9 @@ _Author_: Jeremy Pearson
 
 _Version_: 1.0.0
 
-_Libraries_: jest/dotenv/body-parser/eslint/express/debug/superagent
+_Libraries_: jest/bluebird/uuid/fs/debug/eslint
 
-_Last modified_: 2/2/2018
+_Last modified_: 2/3/2018
 
 # Function use
 
@@ -18,6 +18,10 @@ Added in all the tests!
 _Brief description_
 
 ## Challenge functions
+
+[K-ary tree with broken down HTML elemnts into their respective parents] = getHTMLTree([FILEPATH])
+
+_Returns a k-ary tree from a given HTML document. NOTE: DEFAULT IS TO MINIMAL.HTML ASSET FROM INDEX FILE_
 
 # Lab Readme (SPECS)
 
