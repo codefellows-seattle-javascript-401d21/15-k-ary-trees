@@ -1,0 +1,19 @@
+{
+  "name": "lib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "queue.js",
+  "dependencies": {
+    "eslint": "^4.16.0",
+    "jest": "^22.1.4"
+  },
+  "devDependencies": {
+    "bluebird": "^3.5.1"
+  },
+  "scripts": {
+    "test": "jest --verbose",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
