@@ -10,8 +10,9 @@ const TreeNode = class {
     this.val = {eN: eleName, tC: textContent};
     this.children = [];
   }
-}
+};
 
+// O(n) - n is a total number of characters in a file. it checks each character so O(n)
 function htmlTree(filePath){
 
   let dataStr;
@@ -68,7 +69,7 @@ function htmlTree(filePath){
         tag = '';
       }
       // char: if tag ended, it is for text. if tag not ended, it is for tag.
-      else{// if(currentStr[i] !== ' '){
+      else{
         if(!closed){
           tag += currentStr[i];
         }
