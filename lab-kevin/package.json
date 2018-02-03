@@ -1,0 +1,28 @@
+{
+  "name": "lab-kevin",
+  "version": "1.0.0",
+  "description": "lab 25 - Tree Data Structure - build a data tree out of an html document",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "jest --verbose -i",
+    "test:debug": "DEBUG=* jest --verbose -i",
+    "start:debug": "DEBUG=http* node index.js"
+  },
+  "keywords": [
+    "html",
+    "trees"
+  ],
+  "author": "Kevin Miller",
+  "license": "MIT",
+  "devDependencies": {
+    "debug": "^3.1.0",
+    "jest": "^22.1.4"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1"
+  }
+}
