@@ -15,56 +15,69 @@ const TreeNode = class {
 
 
 function htmlTree(filePath){
-  const dataStr = fs.readFileSync(filePath).toString();
+  let dataStr = fs.readFileSync(filePath).toString().split(/\r?\n/);
+
+//let arr = dataStr.split(/\r?\n/);
+  for(let i = 0; i < dataStr.length; i++){
+    dataStr[i] = dataStr[i].trim();
+  }
 //console.log(dataStr);
+
   let parentStack = new Stack();
   let tree = new kTree();
   let root = new TreeNode('html', '');
   tree.root = root;
   parentStack.push(tree.root);
-  
-  let closed = true;
-  let tag = '';
-  let text = '';
 
-  for(let i = 15; i < dataStr.length; i++){
-    // tag starts
-    if(dataStr[i] === '<') {
-//console.log('TAG STARTED');
-      closed = false;
-      if(text.length > 0){
-//console.log('STACK PEEK ', parentStack.peek());
-        parentStack.peek().value.val.tC = text;
-        text = '';
+
+  for(let j = 1; j < dataStr.length; j++){
+  
+    let closed = true;
+    let tag = '';
+    let text = '';
+
+    let currentStr = dataStr[j];
+    for(let i = 0; i < currentStr.length; i++){
+//console.log(dataStr[j]);
+      // tag starts
+      if(currentStr[i] === '<') {
+  //console.log('TAG STARTED');
+        closed = false;
+        if(text.length > 0){
+  //console.log('STACK PEEK ', parentStack.peek());
+          parentStack.peek().value.val.tC = text;
+          text = '';
+        }
       }
-    }
-    // tag ends
-    else if(dataStr[i] === '>'){
-//console.log('TAG ENDED');
-      closed = true;
-      if(tag.includes('/')){
-//console.log('CLOSING TAG ', parentStack.peek());
-        if(tag.includes(parentStack.peek().value.val.eN)) parentStack.pop();
+      // tag ends
+      else if(currentStr[i] === '>'){
+  //console.log('TAG ENDED');
+        closed = true;
+        if(tag.includes('/')){
+  //console.log('CLOSING TAG ', parentStack.peek());
+          if(tag.includes(parentStack.peek().value.val.eN)) parentStack.pop();
+        }
+        else{
+          let newTag = new TreeNode(tag, '');
+  //console.log('tag: ', newTag.val.eN);
+  //console.log(parentStack.peek().value.children);
+          (parentStack.peek().value.children).push(newTag);
+          parentStack.push(newTag);
+        }
+        tag = '';
       }
-      else{
-        let newTag = new TreeNode(tag, '');
-//console.log('tag: ', newTag.val.eN);
-//console.log(parentStack.peek().value.children);
-        (parentStack.peek().value.children).push(newTag);
-        parentStack.push(newTag);
-      }
-      tag = '';
-    }
-    // char: if tag ended, it is for text. if tag not ended, it is for tag.
-    else if(dataStr[i] !== ' '){
-      if(dataStr[i] + dataStr[i+1] === '\n'){
-        i++;
-      }
-      else if(!closed){
-        tag += dataStr[i];
-      }
-      else{
-        text += dataStr[i];
+      // char: if tag ended, it is for text. if tag not ended, it is for tag.
+      else if(currentStr[i] !== ' '){
+  //console.log(dataStr[i]);
+        //if(dataStr[i] + dataStr[i+1] === /\r?\n/){
+        //  i++;
+        //}
+        if(!closed){
+          tag += currentStr[i];
+        }
+        else{
+          text += currentStr[i];
+        }
       }
     }
   }
