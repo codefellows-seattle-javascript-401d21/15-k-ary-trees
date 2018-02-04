@@ -7,7 +7,7 @@ const fs = Promise.promisifyAll(require('fs'), {suffix: 'Prom'});
 
 
 
-let getHTMLTree = module.exports = (filepath = '../assets/minimal.html') => {
+let getHTMLTree = module.exports = (filepath = '../assets/minimal.html', callback) => {
 
   let HTMLTree = new KTree();
   let emulatedStack = []; //fake stack using an array
@@ -96,11 +96,11 @@ let getHTMLTree = module.exports = (filepath = '../assets/minimal.html') => {
     }) //comma left out so I can uncomment the next .then
     .then(data => { // debugging .then, comment out in final product
       // console.log(emulatedStack);
-      console.log(HTMLTree);
+      // console.log(HTMLTree);
       // console.log(HTMLTree.root.val);
       // console.log(HTMLTree.root.children[1]);
       // console.log('DATA: ', data);
-      return HTMLTree;
+      callback(HTMLTree);
     });
     
 };

@@ -5,7 +5,7 @@ _Version_: 1.0.0
 
 _Libraries_: jest/bluebird/uuid/fs/debug/eslint
 
-_Last modified_: 2/3/2018
+_Last modified_: 2/4/2018
 
 # Function use
 
@@ -19,9 +19,9 @@ _Brief description_
 
 ## Challenge functions
 
-[K-ary tree with broken down HTML elemnts into their respective parents] = getHTMLTree([FILEPATH])
+getHTMLTree([FILEPATH], [CALLBACK FUNCTION])
 
-_Returns a k-ary tree from a given HTML document. NOTE: DEFAULT IS TO MINIMAL.HTML ASSET FROM INDEX FILE_
+_Returns a k-ary tree from a given HTML document with the callback function. NOTE: DEFAULT IS TO MINIMAL.HTML ASSET FROM INDEX FILE_
 
 # Lab Readme (SPECS)
 
