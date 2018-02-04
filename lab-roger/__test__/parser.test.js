@@ -21,7 +21,7 @@ describe('Parser Module', function() {
       expect(parser()).toBeNull();
     });
 
-    it('should return null if no data', () => {
+    it('should return null no html tags in data', () => {
       expect(parser('hello')).toBeNull();
     });
   });

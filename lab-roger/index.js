@@ -1,7 +1,6 @@
 'use strict';
 const Stack = require('./lib/stack.js');
 const parser = require('./lib/parser.js');
-// const moduleTwo = require('./lib/moduleTwo.js');
 const ktree = require('./lib/kary-tree');
 const fs = require ('fs');
 
@@ -21,7 +20,7 @@ tree.insert(newarray[0], newarray[0]);
 if (!stack.top) { stack.push(newarray[0]); }
 
 
-
+// O of n
 for (let i = 1; i < newarray.length; i ++) {
   let parent = stack.top.value;
  
@@ -34,4 +33,4 @@ for (let i = 1; i < newarray.length; i ++) {
   }
 
 }
-console.dir(tree, {depth: null});
+//console.dir(tree, {depth: null});
