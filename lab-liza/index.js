@@ -4,7 +4,24 @@ const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'), {suffix: 'Prom'});
 const Tree = require('./lib/tree.js');
 
-let treeify = (data) => {
+const htmlFile = module.exports = {};
+
+htmlFile.createTree = function (fileName) {
+  let data;
+
+  if(typeof fileName !== 'string') return null;
+
+  try {
+    data = fs.readFileSync(`./assets/${fileName}`)
+      .toString()
+      .split('<!DOCTYPE html>')[1];
+    return htmlFile.treeify(data);
+  } catch (err) {
+    throw new Error('Error');
+  }
+};
+
+htmlFile.treeify = (data) => {
   let stack = [], tree, tag, end = false;
 
   while (!end) {
@@ -45,12 +62,4 @@ let treeify = (data) => {
   return tree;
 };
 
-fs.readFileProm('./assets/minimal.html')
-  .then( data => {
-    data = data.toString().split('<!DOCTYPE html>')[1];
-    return JSON.stringify(treeify(data));
-  })
-  .then( data => {
-    fs.writeFileProm('./assets/results.json', data);
-  })
-  .catch(console.error);
+htmlFile.createTree('minimal.html');
