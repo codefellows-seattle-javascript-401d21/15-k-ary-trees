@@ -75,9 +75,11 @@ function parseHtml(html) {
         el = node.match(/<[^</]+>/);
         if (el) {
           el = el[0];
-          let close = el.replace(/\s[^>]+/, '');
-          elRgx = new RegExp(`${el}(.+)</${close.substr(1)}`);
-          console.log(el, close, elRgx, node);
+          let closeTag = el.replace(/\s[^>]+/, '');
+          elRgx = new RegExp(`${el}(.+)</${closeTag.substr(1)}`);
+          console.log(el, closeTag, elRgx, node);
+          console.log(JSON.stringify(node.match(elRgx)));
+    
           parse_node = node.match(elRgx)[1];
           
           callback(parse_node, el); 
