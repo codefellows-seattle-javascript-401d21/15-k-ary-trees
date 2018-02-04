@@ -33,6 +33,7 @@ const K_ary = module.exports = class {
 
   // Insertions
   insert(val, parent) {
+    if(arguments.length < 2) return null;
     let tn = new TreeNode(val);
 
     if(!this.root) {

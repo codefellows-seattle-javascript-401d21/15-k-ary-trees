@@ -9,7 +9,6 @@ var elArray;
 
 elArray = fs.readFileSync('./assets/minimal.html', (err, data) => {
   if (err) throw err;
-  //console.log(elArray);
 });
 
 let newarray = parser(elArray);
@@ -28,15 +27,11 @@ for (let i = 1; i < newarray.length; i ++) {
  
  
   if (newarray[i] != stack.top.value) {
-    // console.log('_____', newarray[i]);
     tree.insert(newarray[i],  parent);
     stack.push(newarray[i]);
-    
   } else  {
     stack.pop();
-   
   }
-  
-    
+
 }
 console.dir(tree, {depth: null});

@@ -11,7 +11,7 @@ module.exports = class {
   }
 
   push(val) {
-
+    if(this.size === this.maxSize) throw  new Error('stack overflow');
 
     let node = new Node(val);
 
