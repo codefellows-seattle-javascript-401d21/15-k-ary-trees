@@ -79,41 +79,44 @@ module.exports = class {
       this.root =  tn;
       return this;
     }
-   
+    console.log('parent', tn);
     if (parent === undefined) throw new Error('Validation Error: Parent value is undefined.');
+    console.log('parent', tn);
     if (!this.root.children){
       this.root.children =  new SLL();
       this.root.children.insertHead(tn);
       return this;
     }
-
-    if( parent.eleName === this.root.value.eleName ) {
-      if (!this.root.children) this.root.children = new SLL();
-      this.root.children.insertHead(tn);
-      return this;
-    }
-
     this.breadthFirst( node => {
+      console.log('tree parent', parent.eleName, 'tree node', node.value.value.eleName);
       if( parent.eleName === node.value.value.eleName) {
+      
         if (!node.value.children) node.value.children = new SLL();
         node.value.children.insertHead(tn);
+        console.log('node.value.children', node.value.children);
         return this;
       } 
     });
     return this;
   }
    
+
   breadthFirst(callback){
     let childrenQue = new Queue();
+    //if (!this.root.children) this.root.children =  new SLL();
+   // console.log('this.root', this.root)
     childrenQue.enqueue(this.root.children.head);
-    let node; 
-    while(childrenQue.back){
-      node = childrenQue.dequeue();
-      while(node){
-        callback(node);
-        if (node.value.children) childrenQue.enqueue(node.value.children.head);
-        node = node.next;
-      }
+    //childrenQue.enqueue(this.root.children.head);
+    let node = childrenQue.dequeue();
+  //  console.log('node', node);
+    while(node){
+      callback(node);
+     // let the_head = node.value.children ? node.value.children.head : 
+      //console.log('node.value.children.head', node.value.children.head);
+      if(node.value.children) {
+      childrenQue.enqueue(node.value.children.head);
+    }
+      node = node.next;
     }
   }
 
