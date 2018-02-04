@@ -4,11 +4,25 @@ const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'), {suffix: 'Prom'});
 const Tree = require('./lib/tree.js');
 
-let treeify = (data) => {
-  let stack = [];
-  let tree;
-  let tag;
-  let end = false;
+const htmlFile = module.exports = {};
+
+htmlFile.createTree = function (fileName) {
+  let data;
+
+  if(typeof fileName !== 'string') return null;
+
+  try {
+    data = fs.readFileSync(`./assets/${fileName}`)
+      .toString()
+      .split('<!DOCTYPE html>')[1];
+    return htmlFile.treeify(data);
+  } catch (err) {
+    throw new Error('Error');
+  }
+};
+
+htmlFile.treeify = (data) => {
+  let stack = [], tree, tag, end = false;
 
   while (!end) {
     data = data.trim();
@@ -22,7 +36,6 @@ let treeify = (data) => {
       }
       data = data.slice(i + 1);
       stack.pop( tag );
-      console.log('</add>:', stack);
 
     // <opening tag>
     } else if ( data[0] === '<' ) {
@@ -31,10 +44,9 @@ let treeify = (data) => {
         tag += data[j];
       }
       data = data.slice(j + 1);
-      // !stack[0] ? tree = new Tree (tag)
-      //   : tree.insert(tag, `${stack[0]}`);
+      if (tree === undefined) tree = new Tree ();
+      tree.insert(tag, stack[stack.length - 1]);
       stack.push( tag );
-      console.log('<add>:', stack);
 
     // content
     } else {
@@ -43,16 +55,11 @@ let treeify = (data) => {
         tag += data[k];
       }
       data = data.slice(k);
-      console.log('add:', stack);
-      // tree.insert(tag, `${stack[0]}`);
-      // console.log('data', data[1])
+      tree.mostRecent.content = tag;
     }
   }
+  delete tree.mostRecent;
   return tree;
 };
 
-fs.readFileProm('./assets/minimal.html')
-  .then( data => {
-    data = data.toString().split('<!DOCTYPE html>')[1];
-    treeify(data);
-  }).catch( console.error );
+htmlFile.createTree('minimal.html');

@@ -3,15 +3,17 @@
 const Queue = require('./queue');
 
 const TreeNode = class {
-  constructor(value) {
-    this.value = value;
+  constructor(element, content) {
+    this.element = element;
+    this.content = content || '';
     this.children = [];
   }
 };
 
-const Kary = module.exports = class {
+const K_ary = module.exports = class {
   constructor() {
     this.root = null;
+    this.mostRecent = null;
   }
 
   // Traversal Methods
@@ -20,39 +22,33 @@ const Kary = module.exports = class {
     let queue = new Queue();
     queue.enqueue(this.root);
 
-
     while(queue.back) {
       current = queue.dequeue();
-
-      console.log('current', current);
       callback(current);
-
-      current.value.children.map(c => queue.enqueue(c));
+      current.children.map(c => queue.enqueue(c));
     }
   }
 
   // Insertions
-  insert(value, parent) {
-    let tn = new TreeNode(value);
+  insert(element, parent) {
+  // insert(element, parent, contentFlag) {
+
+    var tn = new TreeNode(element);
 
     if(!this.root) {
       this.root = tn;
       return this;
     }
 
+    this.mostRecent = tn;
+
     this.breadthFirst(node => {
-      if(parent === node.value.value) {
-        node.value.children.push(tn);
+      if(parent === node.element) {
+        // contentFlag ? node.content = element
+        node.children.push(tn);
         return;
       }
     });
-
     return this;
   }
-
-  // Removals
-  // removeByVal(value) {
-  //   if(!this.root) return null;
-
-  // }
 };

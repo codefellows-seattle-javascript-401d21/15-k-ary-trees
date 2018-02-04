@@ -28,6 +28,6 @@ module.exports = class Queue {
     this.front = this.front.next;
     if(!this.front) this.back = null;
     temp.next = null;
-    return temp;
+    return temp.value;
   }
 };
