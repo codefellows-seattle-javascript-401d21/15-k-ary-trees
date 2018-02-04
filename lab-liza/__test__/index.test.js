@@ -1,8 +1,6 @@
 'use strict';
 const htmlFile = require('../index');
 
-
-
 describe('Valid', () => {
   it('Should return the root element of minima.html', () => {
     expect(htmlFile.createTree('minimal.html').root.element).toBe('html');
