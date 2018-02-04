@@ -3,9 +3,9 @@
 const Queue = require('./queue');
 
 const TreeNode = class {
-  constructor(element, content) {
+  constructor(element) {
     this.element = element;
-    this.content = content || '';
+    this.content = '';
     this.children = [];
   }
 }
@@ -40,7 +40,6 @@ const K_ary = module.exports = class {
       return this
     }
 
-    this.mostRecent = tn;
 
     this.breadthFirst(node => {
       if(parent === node.element) {
@@ -49,16 +48,7 @@ const K_ary = module.exports = class {
         return;
       }
     })
+    this.mostRecent = tn;
     return this
   }
-
-  // // Removals
-  // removeByVal(value) {
-  //   if(!this.root) return;
-  //   this.breadthFirst(node => {
-  //     for (let i = 0; i < node.value.children; i++) {
-  //       if (node.value.children[i].value === value) return node.value.children.splice(i, 1);
-  //     }
-  //   })
-  // }
 }
