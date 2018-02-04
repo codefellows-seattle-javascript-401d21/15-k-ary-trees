@@ -16,6 +16,7 @@ module.exports = class {
   }
 
   breadthFirst(callback) {
+    // BigO(n) - Visit every node once
     if (!callback) throw new Error('Error: callback not defined');
     if (typeof callback !== 'function')
       throw new Error('Error: callback is not a function');
@@ -32,6 +33,7 @@ module.exports = class {
   }
 
   insert(value, parentVal) {
+    // BigO(n) - Traverse at most n nodes to find where to insert the new node
     if (!value && value !== 0)
       throw new Error('Error: value is falsey and non-zero');
 
@@ -52,6 +54,7 @@ module.exports = class {
   }
 
   removeByVal(value) {
+    // BigO(n) - Traverse entire tree visiting all nodes to remove value
     if (!value && value !== 0) throw new Error('Error: value is falsey and non-zero');
     if (!this.root) return null;
 
