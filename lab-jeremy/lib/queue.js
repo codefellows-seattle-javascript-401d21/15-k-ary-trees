@@ -22,7 +22,7 @@ module.exports = class Queue {
   }
 
   dequeue() {
-    if(!this.front && !this.back) throw new Error('Queue is empty.');
+    if(!this.front && !this.back) return new Error('Queue is empty.');
 
     let temp = this.front;
     this.front = this.front.next;

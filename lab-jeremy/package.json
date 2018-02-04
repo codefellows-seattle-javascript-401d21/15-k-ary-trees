@@ -14,9 +14,6 @@
     "start:debug": "DEBUG=http* nodemon index.js"
   },
   "jest": {
-    "setupFiles": [
-      "./__test__/lib/jest-setup.js"
-    ],
     "verbose": true,
     "testEnvironment": "node",
     "collectCoverage": true,
@@ -44,5 +41,8 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "jest": "^22.1.4"
   }
 }
