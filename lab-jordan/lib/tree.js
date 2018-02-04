@@ -31,7 +31,6 @@ const K_ary = module.exports = class {
 
   // Insertions
   insert(element, parent) {
-  // insert(element, parent, contentFlag) {
 
     var tn = new TreeNode(element)
 
@@ -43,7 +42,6 @@ const K_ary = module.exports = class {
 
     this.breadthFirst(node => {
       if(parent === node.element) {
-        // contentFlag ? node.content = element
         node.children.push(tn);
         return;
       }

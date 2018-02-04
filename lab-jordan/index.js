@@ -4,9 +4,9 @@ const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'), {suffix: 'Prom'});
 const Tree = require('./lib/tree.js');
 
-const htmlFile = module.exports = {};
+const htmlTree = module.exports = {};
 
-htmlFile.createTree = function (fileName) {
+htmlTree.create = function (fileName) {
   if (fileName.split('.')[1] !== 'html') return null;
   let data;
 
@@ -14,13 +14,13 @@ htmlFile.createTree = function (fileName) {
     data = fs.readFileSync(`${__dirname}/assets/${fileName}`)
       .toString()
       .split('<!DOCTYPE html>')[1];
-    return htmlFile.treeify(data);
+    return htmlTree.treeify(data);
   } catch (err) {
     throw new Error('No file found');
   }
 }
 
-htmlFile.treeify = (data) => {
+htmlTree.treeify = (data) => {
   let stack = [], tree, tag, end = false;
 
   while (!end) {
