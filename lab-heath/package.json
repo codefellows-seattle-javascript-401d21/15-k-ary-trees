@@ -1,0 +1,22 @@
+{
+  "name": "lab-heath",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "eslint": "^4.17.0",
+    "fs": "^0.0.1-security",
+    "jest": "^22.1.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint"
+  },
+  "author": "",
+  "license": "ISC"
+}
