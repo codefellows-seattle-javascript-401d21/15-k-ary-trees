@@ -3,7 +3,8 @@
 const Queue = require('./qeueuBuilder');
 
 const TreeNode = class {
-  constructor(val) {
+  constructor(type, val) {
+    this.type = type;
     this.val = val;
     this.children = []; // Scott haxored this! Feel free to stretch with the SLL! ;-)
   }
@@ -32,8 +33,8 @@ const K_ary = module.exports = class {
   }
 
   // Insertions
-  insert(val, parent) {
-    let tn = new TreeNode(val);
+  insert(type, val, parent) {
+    let tn = new TreeNode(type, val);
 
     if(!this.root) {
       this.root = tn;
@@ -46,7 +47,6 @@ const K_ary = module.exports = class {
         return;
       }
     });
-
     return this;
   }
 
