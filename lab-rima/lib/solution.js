@@ -1,6 +1,7 @@
 'use strict';
 
-const fs = require('fs');
+const Promise = require('bluebird');
+const readFile = Promise.promisify(require('fs').readFile);
 const kT = require('../lib/kary-tree');
 const kTree = kT.karyTree;
 const TreeNode = kT.TreeNode;
@@ -10,20 +11,22 @@ const Stack = require('../lib/stack');
 // O(n) - n is a total number of characters in a file. it checks each character so O(n)
 function htmlTree(filePath){
 
-  let dataStr;
-  try{
-    dataStr = fs.readFileSync(filePath).toString().split(/\r?\n/);
-  }catch(err){
-    throw new Error('No such file');
-  }
+  return readFile(filePath)
+    .then(res => {
+      res.toString().split(/\r?\n/);
 
+      for(let i = 0; i < res.length; i++){
+        res[i] = res[i].trim();
+      }
+      return res;
+    })
+    .then(res => parseHtml(res))
+    .catch(err => { throw new Error('Invalid input') });
+}
 
-  for(let i = 0; i < dataStr.length; i++){
-    dataStr[i] = dataStr[i].trim();
-  }
-
+function parseHtml(htmlData){
   // if html file doesn't start with <!DOCTYPE html> and <html>, thrwo error
-  if(dataStr[0] !== '<!DOCTYPE html>' || dataStr[1] !== '<html>'){
+  if(htmlData[0] !== '<!DOCTYPE html>' || htmlData[1] !== '<html>'){
     throw new Error('Invalid html');
   }
 
@@ -34,13 +37,13 @@ function htmlTree(filePath){
   parentStack.push(tree.root);
 
 
-  for(let j = 2; j < dataStr.length; j++){
+  for(let j = 2; j < htmlData.length; j++){
   
     let closed = true;
     let tag = '';
     let text = '';
 
-    let currentStr = dataStr[j];
+    let currentStr = htmlData[j];
     for(let i = 0; i < currentStr.length; i++){
       // tag starts
       if(currentStr[i] === '<') {
