@@ -1,26 +1,36 @@
 'use strict';
-// const module = require('./lib/module.js');
-// const moduleOne = require('./lib/moduleOne.js');
-// const moduleTwo = require('./lib/moduleTwo.js');
-
+const Stack = require('./lib/stack.js');
+const parser = require('./lib/parser.js');
+const ktree = require('./lib/kary-tree');
 const fs = require ('fs');
 
-fs.readFile('./assets/minimal.html', (err, data) => {
+var elArray;
+
+elArray = fs.readFileSync('./assets/minimal.html', (err, data) => {
   if (err) throw err;
-  let tempData = data.toString().split(/\n/gi).map(x => x.trim());
-  let x =tempData.join('');
-  // split('<' || '>');
-  
-  console.log(x);
-
-  // let splitData =tempData.split(/<\w+>/);
-  let splitData = x.match(/<\/?\w+>/gi || />(\D+)</gi);
-  console.log(splitData, splitData.length);
-
-  // let finalArray = splitData.filter(x => x[0] != '/');
-  // console.log('final array', finalArray);
-  // let finalFinal = finalArray.map(x => x.split(/>/));
-  
- 
-  // console.log(finalFinal);
 });
+
+let newarray = parser(elArray);
+
+let stack = new Stack();
+let tree = new ktree;
+
+
+tree.insert(newarray[0], newarray[0]);
+if (!stack.top) { stack.push(newarray[0]); }
+
+
+// O of n
+for (let i = 1; i < newarray.length; i ++) {
+  let parent = stack.top.value;
+ 
+ 
+  if (newarray[i] != stack.top.value) {
+    tree.insert(newarray[i],  parent);
+    stack.push(newarray[i]);
+  } else  {
+    stack.pop();
+  }
+
+}
+//console.dir(tree, {depth: null});

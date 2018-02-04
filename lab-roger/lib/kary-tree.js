@@ -24,7 +24,7 @@ const K_ary = module.exports = class {
     while(queue.back) {
       current = queue.dequeue();
 
-      console.log('current', current);
+      // console.log('current', current);
       callback(current);
 
       current.val.children.map(c => queue.enqueue(c));
@@ -33,6 +33,7 @@ const K_ary = module.exports = class {
 
   // Insertions
   insert(val, parent) {
+    if(arguments.length < 2) return null;
     let tn = new TreeNode(val);
 
     if(!this.root) {
