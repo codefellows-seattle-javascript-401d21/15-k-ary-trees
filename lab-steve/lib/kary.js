@@ -5,6 +5,7 @@ const Queue = require('./queue');
 const TreeNode = class {
   constructor(value) {
     this.value = value;
+    this.parent = null;
     this.children = [];
   }
 };
@@ -41,16 +42,21 @@ module.exports = class {
 
     if (!this.root) {
       this.root = tn;
-      return this;
+      return tn;
     }
 
     if (!parentVal && parentVal !== 0)
       throw new Error('Error: parentVal is falsey and non-zero');
 
     // push it or do a no-op
-    this.breadthFirst(node => node.value === parentVal ? node.children.push(tn) : null);
+    this.breadthFirst(node => {
+      if (node.value === parentVal) {
+        tn.parent = node;
+        node.children.push(tn);
+      }
+    });
 
-    return this;
+    return tn;
   }
 
   removeByVal(value) {
