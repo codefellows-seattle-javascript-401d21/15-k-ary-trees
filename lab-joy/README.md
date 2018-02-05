@@ -19,6 +19,7 @@ You can use the function by navigating to the lab-joy folder in your terminal, s
 ``` let reader = require('./index'); ```
 You can parse HTML for file paths using:
 ``` reader.parseHTML(filePath) ```
+.
 
 ## Example
 We are using the file **minimal.html**, which contains the following code:
@@ -58,7 +59,7 @@ In our parsing function, we split the stringified buffer that we get from the HT
 
 ```let arr = str.split(/\<(.*)\>/g).filter(el => el.trim());```
 
-This returns to us the following array:
+This gives us the following array:
 
 ```
 [ '!DOCTYPE html',
