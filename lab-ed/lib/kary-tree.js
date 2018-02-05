@@ -9,16 +9,6 @@ const TreeNode = class {
   }
 }
 
-// Tree = Node {
-//   value: {
-//     eleName: 'xxx',
-//     textContent: 'yyy' (can be empty string??)
-//   },
-//     children: SLL [{Node}, {Node}, ...]
-//   }
-// }
-
-
 const K_ary = module.exports = class {
   constructor() {
     this.root = null
