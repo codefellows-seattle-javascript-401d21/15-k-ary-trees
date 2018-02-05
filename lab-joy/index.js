@@ -3,7 +3,7 @@
 const Tree = require('./lib/tree');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
-// let path = `${__dirname}/data/minimal.html`;
+let path = `${__dirname}/data/minimal.html`;
 
 exports.parseHTML = path => {
     try { fs.accessSync(path); } catch (err) { throw new Error(err); }
@@ -45,7 +45,23 @@ exports.parseHTML = path => {
                 }
             });
         })
-        .then(tree => console.log(tree))
+        .then(tree => {
+            console.log('## inside the .then: ', tree);
+            return tree;
+        })
         .catch(err => new Error(err));
+    return tree;
 };
-// console.log(exports.parseHTML(path));
+console.log('## return value: ', exports.parseHTML(path));
+
+/* Why is this happening?:
+
+## return value:  Tree { root: null }
+## inside the .then:  Tree {
+  root:
+   TreeNode {
+     value: { tag: 'html', content: '' },
+     children: [ [TreeNode], [TreeNode] ] } }
+
+
+*/
