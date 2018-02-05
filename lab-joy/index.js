@@ -3,10 +3,12 @@
 const Tree = require('./lib/tree');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
+let path = `${__dirname}/data/minimal.html`;
 
-(function () {
+exports.parseHTML = path => {
+    try { fs.accessSync(path); } catch (err) { throw new Error(err); }
     let tree = new Tree();
-    fs.readFileProm(`${__dirname}/data/minimal.html`)
+    fs.readFileProm(path)
         .then(buffer => buffer.toString())
         .then(str => {
             // set up tree structure
@@ -33,7 +35,7 @@ const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
             }
         })
         .then(() => {
-            // modify tree value to separate tags and content
+            // modify node values to separate tags and content
             tree.breadthFirst(node => {
                 let firstBracket = node.value.tag.indexOf('>');
                 if (firstBracket > -1) {
@@ -42,6 +44,7 @@ const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
                     node.value.tag = node.value.tag.slice(0, firstBracket);
                 }
             });
+            console.log(tree);
         })
         .catch(err => console.error(err));
-})();
+};
