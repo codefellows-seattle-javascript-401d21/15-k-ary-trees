@@ -10,10 +10,10 @@ tree similar to how the DOM would represent the HTML structure.
 
 ## Getting Started
 The user needs to do the following to use this HTML parser/Tree Builder
--Clone the repository from github [here](https://github.com/stevegcarpenter/15-k-ary-trees)
--Install all the necessary `npm` packages by executing `npm install`
--To run the `linter` check execute `npm run lint`
--Execute an `npm run test` command to run the test suite - it currently is about 90% coverage
+- Clone the repository from github [here](https://github.com/stevegcarpenter/15-k-ary-trees)
+- Install all the necessary `npm` packages by executing `npm install`
+- To run the `linter` check execute `npm run lint`
+- Execute an `npm run test` command to run the test suite - it currently is about 90% coverage
 
 ## How to Use
 If you wish to use this HTML parsing code, you should first know it's
@@ -50,25 +50,25 @@ Both the methods shown above have their benefits and it's nice to have the optio
 
 
 ## Architecture
--NodeJS
--npm
--JavaScript
+- NodeJS
+- npm
+- JavaScript
 
 ## Change Log
--2018-02-03 Initial scaffolding of repository [Steven Carpenter]
--2018-02-03 Adding empty test file for the HTML parser [Steven Carpenter]
--2018-02-04 Added BigO timing to the kary.js file [Steven Carpenter]
--2018-02-04 Removed .test.env file from .gitignore [Steven Carpenter]
--2018-02-04 Adding tag file [Steven Carpenter]
--2018-02-04 Added the htmlparser tests [Steven Carpenter]
--2018-02-04 Added the modifications to the stretch.html [Steven Carpenter]
--2018-02-04 Adding htmlparser code [Steven Carpenter]
--2018-02-04 Adding a modification so each node traks its parent [Steven Carpenter]
--2018-02-04 Adding npm packages, scripts, etc [Steven Carpenter]
--2018-02-04 Adding html parser tests [Steven Carpenter]
--2018-02-04 Adding README file just missing the changelog [Steven Carpenter]
+- 2018-02-03 Initial scaffolding of repository [Steven Carpenter]
+- 2018-02-03 Adding empty test file for the HTML parser [Steven Carpenter]
+- 2018-02-04 Added BigO timing to the kary.js file [Steven Carpenter]
+- 2018-02-04 Removed .test.env file from .gitignore [Steven Carpenter]
+- 2018-02-04 Adding tag file [Steven Carpenter]
+- 2018-02-04 Added the htmlparser tests [Steven Carpenter]
+- 2018-02-04 Added the modifications to the stretch.html [Steven Carpenter]
+- 2018-02-04 Adding htmlparser code [Steven Carpenter]
+- 2018-02-04 Adding a modification so each node traks its parent [Steven Carpenter]
+- 2018-02-04 Adding npm packages, scripts, etc [Steven Carpenter]
+- 2018-02-04 Adding html parser tests [Steven Carpenter]
+- 2018-02-04 Adding README file just missing the changelog [Steven Carpenter]
 
 ## Credits and Collaborations
-[NodeJS](https://nodejs.org)
-[npm](https://www.npmjs.com/)
-[JavaScript](https://www.javascript.com/)
+- [NodeJS](https://nodejs.org)
+- [npm](https://www.npmjs.com/)
+- [JavaScript](https://www.javascript.com/)
