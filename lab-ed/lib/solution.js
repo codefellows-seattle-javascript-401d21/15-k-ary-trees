@@ -10,8 +10,11 @@ solution.htmlTree = function(tree) {
   fs.readFileProm(`${__dirname}/../assets/minimal.html`)
     .then(buffer => buffer.toString())
     .then(buffer => {
-      var html = buffer
-      // get rid of all html that starts with </
+      var htmlString = buffer
+      //remove <span> and </span>
+      var repl = htmlString.replace(/<span>/, '')
+      var html = repl.replace(/<\/span>/, '')
+      //get rid of all html that starts with </
       arr = html.split('\n').filter(ele => ele.match(/<\w/))
       console.log(arr)
       for (let i = 0; i < arr.length; i++) {
