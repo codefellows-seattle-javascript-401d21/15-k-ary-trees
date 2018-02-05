@@ -12,7 +12,7 @@ const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
             // /\<(.*?)\>/g
             let arr = str.split(/\<(.*)\>/g).filter(el => el.trim()); //eslint-disable-line
             arr.shift();
-            console.log(arr);
+            // console.log(arr);
 
             /*
             Iterate through arr.
@@ -24,33 +24,32 @@ const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
             // get element tree structure first
 
             tree.insert(arr[0]);
-            // console.log(tree);
-
-            // let openTags = arr.filter(el => el[0] !== '/');
             for (let i = 1; i < arr.length; i++) {
                 let current = arr[i];
                 let tempArr = arr.slice(0, i);
-
-
-
-                // for (let j = 0; j < i; j++) {
-                //     if (tempArr[j][0] === '/') {
-                //         let closeTag = tempArr[j].slice(1);
+                let parent;
+                for (let j = i - 1; j >= 0; j--) {
+                    if (tempArr[j] && tempArr[j].indexOf('/') === -1) {
+                        parent = tempArr[j];
+                        if (current[0] !== '/') {
+                            // console.log(current, parent);
+                            tree.insert(current, parent);
+                        }
+                        break;
+                    }
+                    else if (tempArr[j][0] === '/') {
+                        let temp = tempArr[j].slice(1);
+                        let openIndex;
+                        for (let x in tempArr) 
+                            if (tempArr[x] === temp) openIndex = x;
                         
-                //         for (let k = 0; k < j; k++ ) {
-                //             if (tempArr[k].indexOf(closeTag) === 0)
-                //                 tempArr = tempArr.slice(0, k).concat(tempArr.slice(j + 1));
-                //             console.log(tempArr);
-                //         }
-
-                //     }
-                // }
-
-
-
-                // tree.insert(openTags.shift(), parent);
+                        for (let k = 0; k < tempArr.length; k++) {
+                            if (k >= openIndex && k <= j) tempArr[k] = '';
+                        }
+                    }
+                }
             }
-
+            console.log(tree.root.children[0].children);
             // check for text content second
 
         });

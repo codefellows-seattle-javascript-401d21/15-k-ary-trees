@@ -46,7 +46,7 @@ module.exports = class Tree {
 
         let added = false;
         this.breadthFirst(node => {
-            if (parent === node.value) {
+            if (parent === node.value.tag) {
                 node.children.push(treeNode);
                 added = true;
             } 
@@ -59,7 +59,7 @@ module.exports = class Tree {
     remove(value) {
         if (!value) return 'Must declare value.';
         if (!this.root) return 'Nothing to remove.';
-        if (this.root.value === value) {
+        if (this.root.value.tag === value) {
             this.root = null;
             return 'Root removed.';
         }
@@ -67,7 +67,7 @@ module.exports = class Tree {
         let removed = false;
         this.breadthFirst(node => {
             for (let i in node.children) {
-                if (node.children[i].value === value) {
+                if (node.children[i].value.tag === value) {
                     node.children.splice(i, 1);
                     removed = true;
                 }
