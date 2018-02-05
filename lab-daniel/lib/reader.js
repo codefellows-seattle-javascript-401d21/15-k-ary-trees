@@ -8,7 +8,7 @@ const uuid = require('uuid');
 let pageTree = new Tree();
 
 module.exports = (filePath) => 
-  fs.readFileProm(`${__dirname}/../../assets/minimal.html`)
+  fs.readFileProm(filePath)
     .then(buffer => buffer.toString())
     .then(text => text.split('>').map(v => {
       if (!v) return undefined;
