@@ -6,7 +6,7 @@ class Node {
         this.value = val;
         this.next = null;
     }
-};
+}
 
 module.exports = class Queue {
     constructor() {
