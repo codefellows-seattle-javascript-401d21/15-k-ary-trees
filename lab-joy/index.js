@@ -4,7 +4,7 @@ const Tree = require('./lib/tree');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
 
-(function() {
+(function () {
     let tree = new Tree();
     fs.readFileProm(`${__dirname}/data/minimal.html`)
         .then(buffer => buffer.toString())
@@ -23,9 +23,9 @@ const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
                     }
                     else if (tempArr[j][0] === '/') {
                         let temp = tempArr[j].slice(1), openIndex;
-                        for (let x in tempArr) 
+                        for (let x in tempArr)
                             if (tempArr[x] === temp) openIndex = x;
-                        
+
                         for (let k = 0; k < tempArr.length; k++)
                             if (k >= openIndex && k <= j) tempArr[k] = '';
                     }
