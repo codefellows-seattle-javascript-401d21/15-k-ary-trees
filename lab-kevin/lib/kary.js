@@ -21,38 +21,46 @@ module.exports = class {
       this.root =  tn;
       return this;
     }
-    console.log('parent', tn);
+  
     if (parent === undefined) throw new Error('Validation Error: Parent value is undefined.');
-    console.log('parent', tn);
     if (!this.root.children){
       this.root.children =  new SLL();
       this.root.children.insertHead(tn);
       return this;
     }
+
+    if( parent === this.root.value ) {
+      if (!this.root.children) this.root.children = new SLL();
+      this.root.children.insertHead(tn);
+      return this;
+    }
+
     this.breadthFirst( node => {
-      console.log('parent', tn);
       if( parent === node.value.value) {
-      
         if (!node.value.children) node.value.children = new SLL();
         node.value.children.insertHead(tn);
-        console.log('node.value.children', node.value.children);
         return this;
       } 
     });
     return this;
-  }
+  }   //Big-O O(n)
+
 
   find(val){
     if (val === undefined) throw new Error('Validation Error: value is undefined.');
     if (!this.root) return this;
     if (!this.root.children) return this;
 
+    let  nodeVal = null;
     this.breadthFirst( node => {
       if( val === node.value.value) {
-        return node.value;
+        console.log('node', node);
+        nodeVal = node.value;
+        return;
       } 
     });
-  }
+    return nodeVal;
+  } //Big-O O(n)
 
   removeByVal(val){
     if (val === undefined) throw new Error('Validation Error: value is undefined.');
@@ -62,16 +70,20 @@ module.exports = class {
       return this;
     }
 
-    let previous_node;
+    let previous_node = null;
 
     this.breadthFirst( node => {
       if( val === node.value.value) {
+        if( !previous_node) {
+          this.root.children.head = node.next;
+          return this;
+        }
         previous_node.next = node.next;
         return this;
       } 
       previous_node = node;
     });
-  }
+  } //Big-O O(n)
 
   insertData(val, parent) {
     let tn = new Tn(val);
@@ -101,7 +113,7 @@ module.exports = class {
       } 
     });
     return this;
-  }
+  } //Big-O O(n)
    
   breadthFirst(callback){
     let childrenQue = new Queue();
@@ -115,6 +127,6 @@ module.exports = class {
         node = node.next;
       }
     }
-  }
+  } //Big-O O(n)
 
 };
