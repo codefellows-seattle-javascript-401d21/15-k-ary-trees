@@ -10,6 +10,7 @@ solution.htmlTree = function(tree) {
   fs.readFileProm(`${__dirname}/../assets/minimal.html`)
     .then(buffer => buffer.toString())
     .then(buffer => {
+      // O(n)
       var htmlString = buffer
       //remove <span> and </span>
       var repl = htmlString.replace(/<span>/, '')
@@ -37,6 +38,7 @@ solution.htmlTree = function(tree) {
 }
 
 function getElement(arrindex, arr, tree) {
+  // O(n)
   var element = ''
   for (var x = 0; arr[arrindex][x] !== '>'; x++) {
     element += arr[arrindex][x]
@@ -49,6 +51,7 @@ function getElement(arrindex, arr, tree) {
 }
 
 function getText(eleIndex, arrIndex, arr) {
+  // O(n)
   if (eleIndex < arr[arrIndex].length) {
     var text = ''
     for (eleIndex; arr[arrIndex][eleIndex] !== '<'; eleIndex++) {
