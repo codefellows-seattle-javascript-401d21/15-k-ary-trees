@@ -63,5 +63,12 @@ console.log('## return value: ', exports.parseHTML(path));
      value: { tag: 'html', content: '' },
      children: [ [TreeNode], [TreeNode] ] } }
 
+If I put the return value as "return fs.readFileProm..." then I get this:
 
+## return value:  Promise {
+  _bitField: 0,
+  _fulfillmentHandler0: undefined,
+  _rejectionHandler0: undefined,
+  _promise0: undefined,
+  _receiver0: undefined }
 */
