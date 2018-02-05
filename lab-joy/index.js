@@ -14,26 +14,20 @@ const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
             arr.shift();
             tree.insert(arr[0]);
             for (let i = 1; i < arr.length; i++) {
-                let current = arr[i];
-                let tempArr = arr.slice(0, i);
-                let parent;
+                let current = arr[i], tempArr = arr.slice(0, i), parent;
                 for (let j = i - 1; j >= 0; j--) {
                     if (tempArr[j] && tempArr[j].indexOf('/') === -1) {
                         parent = tempArr[j];
-                        if (current[0] !== '/') {
-                            tree.insert(current, parent);
-                        }
+                        if (current[0] !== '/') tree.insert(current, parent);
                         break;
                     }
                     else if (tempArr[j][0] === '/') {
-                        let temp = tempArr[j].slice(1);
-                        let openIndex;
+                        let temp = tempArr[j].slice(1), openIndex;
                         for (let x in tempArr) 
                             if (tempArr[x] === temp) openIndex = x;
                         
-                        for (let k = 0; k < tempArr.length; k++) {
+                        for (let k = 0; k < tempArr.length; k++)
                             if (k >= openIndex && k <= j) tempArr[k] = '';
-                        }
                     }
                 }
             }
@@ -44,9 +38,8 @@ const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
                 let firstBracket = node.value.tag.indexOf('>');
                 if (firstBracket > -1) {
                     let secondBracket = node.value.tag.indexOf('<');
-                    let content = node.value.tag.slice(firstBracket + 1, secondBracket);
+                    node.value.content = node.value.tag.slice(firstBracket + 1, secondBracket);
                     node.value.tag = node.value.tag.slice(0, firstBracket);
-                    node.value.content = content;
                 }
             });
         })
