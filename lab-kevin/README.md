@@ -1,16 +1,19 @@
-># Lab 11: Express
+># Lab 15 K-ary Trees
 
-This is a simple  HTTP server created using express.  There are four basic CRUD methods available for interacting with an object with three properties, subject, comment and id. 
 
-  - POST - Create an object and have it saved to a file. 
+Read an HTML document.  Using the &lt;html&gtt; as the root element, parse the rest of the HTML tags and content into a tree data structure.  Create an object to insert into the value property of each node
 
-  - PUT - modify the subject and comment properties.
+```JAVASCRIPT
+  Tree = Node {
+    value: {
+      eleName: 'xxx',
+      textContent: 'yyy' (can be empty string??)
+    },
+      children: SLL [{Node}, {Node}, ...]
+    }
+  }
+```
 
-  - GET - Fetch teh data for an object.
-
-  - DELETE - remove an object fro storage. 
-
-  The objects are stored in files on the server as json.
 
 >## Install
 
@@ -24,18 +27,12 @@ This is a simple  HTTP server created using express.  There are four basic CRUD 
 
 ```JSON
     "devDependencies": {
-        "debug": "^3.1.0",
-        "dotenv": "^5.0.0",
-        "eslint": "^4.16.0",
-        "jest": "^22.1.4",
-        "superagent": "^3.8.2"
-      },
-      "dependencies": {
-        "bluebird": "^3.5.1",
-        "body-parser": "^1.18.2",
-        "express": "^4.16.2",
-        "uuid": "^3.2.1"
-      }
+    "debug": "^3.1.0",
+    "jest": "^22.1.4"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1"
+  }
 ```
 
 ### npm scripts
@@ -43,12 +40,12 @@ This is a simple  HTTP server created using express.  There are four basic CRUD 
 - The following npm scripts are available:
 
 ```JSON
-    "scripts": {
-      "lint": "eslint .",
-      "test": "jest --verbose -i",
-      "test:debug": "DEBUG=http* jest --verbose -i",
-      "start": "nodemon index.js",
-      "start:debug": "DEBUG=http* nodemon index.js"
+   "scripts": {
+    "lint": "eslint .",
+    "test": "jest --verbose -i",
+    "test:debug": "DEBUG=* jest --verbose -i",
+    "start:debug": "DEBUG=http* node index.js"
+  }
 ```
 
 #### Run the tests!
@@ -65,166 +62,410 @@ Debug mode
     npm run test:debug
 ```
 
-#### Start the server
+>## Usage Kary Class
 
-Start
+The k-ary class has 3 methods:
 
-```BASH
-    npm start
-```
+1. insert()
 
-Debug mode
+  - Use this method to insert a value onto the tree.
 
-```BASH
-    npm run start:debug
-```
+  - This takes one argument to set the root
 
->## Usage
+  - Inserting  additional values requires two arguments, a value and a parent value
+  
 
-### Post
+### Create a tree
 
-  - Create a new note by sending a request to /api/v1/note with a body that contains a 'subject' and 'comment'.
-
-  - The response will contain a json copy of the object with its unique identifier.
+Use the new syntax to crete a new instance of a k-ary tree
 
 ```JAVASCRIPT
-{subject: 'talking computers', comment: 'I don\'t like them'}
-
+    const KT = require('../lib/kary');    
+    
+    let kt = new KT();
+```
+```
+    { root: null }
 ```
 
-```BASH
- http POST :4000/api/v1/note subject="talking computers" comment="I don't like them"
+### Insert a value
 
-    HTTP/1.1 201 Created
-    Connection: keep-alive
-    Content-Length: 107
-    Content-Type: application/json; charset=utf-8
-    Date: Tue, 30 Jan 2018 08:09:06 GMT
-    ETag: W/"6b-8CtRPZUH1itf2mPj1CjrgP2Py1Y"
-    X-Powered-By: Express
+Use the insert value method to add a value to the tree
 
-    {
-        "comment": "I don't like them",
-        "id": "0171fde2-929b-4c67-a882-35e11fccc4fb",
-        "subject": "talking computers"
-    }
+```JAVASCRIPT
+    const KT = require('../lib/kary');    
+    
+    let kt = new KT();
+    kt.insert(17);
+```
+```
+    { root: Tn { value: 17, children: null } }
 ```
 
-### GET - fetch one note
+```JAVASCRIPT
+    const KT = require('../lib/kary');    
+    
+    let kt = new KT();
+    kt.insert(17);
+    kt.insert(3,17);
+```
+```JSON
+    '{"root":{"value":17,"children":{"head":{"value":{"value":3,"children":null},"next":null}}}}'
+```
 
-  - Get a json object of a note by sending its unique id as a path to /api/v1/note/&lt;unique_id&gt;
+```JAVASCRIPT
+    const KT = require('../lib/kary');    
+    
+    let kt = new KT();;
+    kt.insert(17);;
+    kt.insert(3,17);;
+    kt.insert(21, 3);;  
+```
+```JSON
+    '{"root":{"value":17,"children":{"head":{"value":{"value":3,"children":{"head":{"value":{"value":17,"children":null},"next":null}}},"next":null}}}}'
+```
 
-```BASH
-    http :4000/api/v1/note/0171fde2-929b-4c67-a882-35e11fccc4fb
-    HTTP/1.1 200 OK
-    Connection: keep-alive
-    Content-Length: 107
-    Content-Type: application/json; charset=utf-8
-    Date: Tue, 30 Jan 2018 08:14:46 GMT
-    ETag: W/"6b-8CtRPZUH1itf2mPj1CjrgP2Py1Y"
-    X-Powered-By: Express
+ 2. RemoveByVal
 
-    {
-        "comment": "I don't like them",
-        "id": "0171fde2-929b-4c67-a882-35e11fccc4fb",
-        "subject": "talking computers"
-    }
+  - The remove by val removes the node with that value
 
+  - This has an airty of one
+
+```JAVASCRIPT
+    const KT = require('../lib/kary');    
+    
+    let kt = new KT();
+    kt.insert(17);
+    kt.insert(3,17);
+    kt.removeByVal(3);
+```
+```JSON
+    '{"root":{"value":17,"children" :null}}'
+```
+
+3. Find
+
+  - Find has an arity of one
+
+  - Find uses the value passed as an argument and returns the node with that value
+
+
+```JAVASCRIPT
+    const KT = require('../lib/kary');    
+    
+    let kt = new KT();
+    kt.insert(17);
+    kt.insert(3,17);
+    kt.insert(21, 3);
+    kt.find(3);
+    
+```
+```JSON
+    '{"value":{"value":3,"children":{"head":{"value":{"value":17,"children":null},"next":null}}}}'
+```
+
+>## Parse Module
+
+The parse.parseHtml method has an airity of one.  It accepts the file path to an html.  The module pareses the html file into a k-ary tree.  The module will throw an error if the file path does not exist or if the file is not an html file
+
+This is an example of the result as JSON
+
+```JSON
+{
+   "root":{
+      "value":{
+         "eleName":"html",
+         "textContent":"",
+         "class":"",
+         "id":""
+      },
+      "children":{
+         "head":{
+            "value":{
+               "value":{
+                  "eleName":"body",
+                  "textContent":"",
+                  "class":"",
+                  "id":""
+               },
+               "children":{
+                  "head":{
+                     "value":{
+                        "value":{
+                           "eleName":"footer",
+                           "textContent":"",
+                           "class":"container primary-footer",
+                           "id":""
+                        },
+                        "children":{
+                           "head":{
+                              "value":{
+                                 "value":{
+                                    "eleName":"p",
+                                    "textContent":"&copy; Codefellows LLC 2017",
+                                    "class":"",
+                                    "id":""
+                                 },
+                                 "children":null
+                              },
+                              "next":null
+                           }
+                        }
+                     },
+                     "next":{
+                        "value":{
+                           "value":{
+                              "eleName":"main",
+                              "textContent":"",
+                              "class":"container primary-main",
+                              "id":""
+                           },
+                           "children":{
+                              "head":{
+                                 "value":{
+                                    "value":{
+                                       "eleName":"section",
+                                       "textContent":"",
+                                       "class":"",
+                                       "id":""
+                                    },
+                                    "children":{
+                                       "head":{
+                                          "value":{
+                                             "value":{
+                                                "eleName":"p",
+                                                "textContent":"Lorem ipsum dolor sit amet,tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                                                "class":"",
+                                                "id":""
+                                             },
+                                             "children":{
+                                                "head":{
+                                                   "value":{
+                                                      "value":{
+                                                         "eleName":"span",
+                                                         "textContent":"consectetur adipisicing elit, sed do eiusmod",
+                                                         "class":"brand-bold",
+                                                         "id":""
+                                                      },
+                                                      "children":null
+                                                   },
+                                                   "next":null
+                                                }
+                                             }
+                                          },
+                                          "next":{
+                                             "value":{
+                                                "value":{
+                                                   "eleName":"p",
+                                                   "textContent":"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam ad consequuntur dolor quis laboriosam animi expedita, recusandae, illo? Omnis reiciendis veritatis iure debitis eos provident accusantium est molestiae commodi corrupti.",
+                                                   "class":"",
+                                                   "id":"primary-text"
+                                                },
+                                                "children":{
+                                                   "head":{
+                                                      "value":{
+                                                         "value":{
+                                                            "eleName":"span",
+                                                            "textContent":"consectetur adipisicing elit, sed do eiusmod",
+                                                            "class":"brand-bold",
+                                                            "id":""
+                                                         },
+                                                         "children":null
+                                                      },
+                                                      "next":null
+                                                   }
+                                                }
+                                             },
+                                             "next":null
+                                          }
+                                       }
+                                    }
+                                 },
+                                 "next":null
+                              }
+                           }
+                        },
+                        "next":{
+                           "value":{
+                              "value":{
+                                 "eleName":"header",
+                                 "textContent":"",
+                                 "class":"container primary-header",
+                                 "id":""
+                              },
+                              "children":{
+                                 "head":{
+                                    "value":{
+                                       "value":{
+                                          "eleName":"nav",
+                                          "textContent":"",
+                                          "class":"",
+                                          "id":""
+                                       },
+                                       "children":{
+                                          "head":{
+                                             "value":{
+                                                "value":{
+                                                   "eleName":"ul",
+                                                   "textContent":"",
+                                                   "class":"",
+                                                   "id":""
+                                                },
+                                                "children":{
+                                                   "head":{
+                                                      "value":{
+                                                         "value":{
+                                                            "eleName":"li",
+                                                            "textContent":"signin",
+                                                            "class":"nav-secondary",
+                                                            "id":"signin"
+                                                         },
+                                                         "children":null
+                                                      },
+                                                      "next":{
+                                                         "value":{
+                                                            "value":{
+                                                               "eleName":"li",
+                                                               "textContent":"contact",
+                                                               "class":"nav-primary",
+                                                               "id":"contact"
+                                                            },
+                                                            "children":null
+                                                         },
+                                                         "next":{
+                                                            "value":{
+                                                               "value":{
+                                                                  "eleName":"li",
+                                                                  "textContent":"about",
+                                                                  "class":"nav-primary",
+                                                                  "id":"about"
+                                                               },
+                                                               "children":null
+                                                            },
+                                                            "next":{
+                                                               "value":{
+                                                                  "value":{
+                                                                     "eleName":"li",
+                                                                     "textContent":"home",
+                                                                     "class":"nav-primary",
+                                                                     "id":"home"
+                                                                  },
+                                                                  "children":null
+                                                               },
+                                                               "next":null
+                                                            }
+                                                         }
+                                                      }
+                                                   }
+                                                }
+                                             },
+                                             "next":null
+                                          }
+                                       }
+                                    },
+                                    "next":{
+                                       "value":{
+                                          "value":{
+                                             "eleName":"h2",
+                                             "textContent":"We're building a tree!",
+                                             "class":"",
+                                             "id":""
+                                          },
+                                          "children":null
+                                       },
+                                       "next":null
+                                    }
+                                 }
+                              }
+                           },
+                           "next":null
+                        }
+                     }
+                  }
+               }
+            },
+            "next":{
+               "value":{
+                  "value":{
+                     "eleName":"head",
+                     "textContent":"",
+                     "class":"",
+                     "id":""
+                  },
+                  "children":{
+                     "head":{
+                        "value":{
+                           "value":{
+                              "eleName":"title",
+                              "textContent":"minimal html to tree",
+                              "class":"",
+                              "id":""
+                           },
+                           "children":null
+                        },
+                        "next":null
+                     }
+                  }
+               },
+               "next":null
+            }
+         }
+      }
+   }
+}
 ```
 
 
-### GET - fetch all ids
+## Tests
 
-- Get a json array of all note ids by sending a GET request to /api/v1/note
+  ### Parse
 
-```BASH
-      http :4000/api/v1/note
-      HTTP/1.1 200 OK
-      Connection: keep-alive
-      Content-Length: 118
-      Content-Type: application/json; charset=utf-8
-      Date: Tue, 30 Jan 2018 08:18:30 GMT
-      ETag: W/"76-RO+qkcrAr3t6PEDzQQXujTYQdGw"
-      X-Powered-By: Express
+  #### Valid
 
-      [
-          "0171fde2-929b-4c67-a882-35e11fccc4fb",
-          "7370a48e-9546-4f05-92fb-6328fdc27afa",
-          "f2658693-3cbb-4aab-90ca-3ae7de04de02"
-      ]
+- Validate that it should return an object with a property of root when invoked with a file path that contains html
 
-```
+- Validate that it should return an object with html as the root value
 
-### PUT - update a note
+- Validate that it should return an object with a root with children
 
-  - Use the unique id to update a note along with a subject and comment in the request body with a PUT request to /api/v1/note
+- Validate that it should return an object with a root and with children elements with the value of head and body
 
-```Bash
-    http POST :4000/api/v1/note subject="Helo" comment="How is you?"
-    HTTP/1.1 201 Created
-    Connection: keep-alive
-    Content-Length: 86
-    Content-Type: application/json; charset=utf-8
-    Date: Tue, 30 Jan 2018 08:23:17 GMT
-    ETag: W/"56-NbKFB0DGFQ4LrE5HRKXuk09Ueu0"
-    X-Powered-By: Express
+  #### Invalid
 
-    {
-        "comment": "How is you?",
-        "id": "201d5149-7736-42e1-a349-b6f3e641e735",
-        "subject": "Helo"
-    }
+  - Validate that it should throw an error for undefined argument
 
-    --------------------
+  - Validate that it should throw an error for non html file
 
-    http PUT :4000/api/v1/note/201d5149-7736-42e1-a349-b6f3e641e735 subject="Hello" comment="How are you?"
-    HTTP/1.1 204 No Content
-    Connection: keep-alive
-    Date: Tue, 30 Jan 2018 08:24:40 GMT
-    X-Powered-By: Express
+  - Validate that it should throw an error for a bad path
+ 
 
-    ---------------------
+  ### K-ary
 
-    http :4000/api/v1/note/201d5149-7736-42e1-a349-b6f3e641e735
-    HTTP/1.1 200 OK
-    Connection: keep-alive
-    Content-Length: 88
-    Content-Type: application/json; charset=utf-8
-    Date: Tue, 30 Jan 2018 08:25:27 GMT
-    ETag: W/"58-bETguzT0FCDFcQ95/XZ/XsWno3Y"
-    X-Powered-By: Express
+  #### Valid
 
-    {
-        "comment": "How are you?",
-        "id": "201d5149-7736-42e1-a349-b6f3e641e735",
-        "subject": "Hello"
-    }
-```
+  - Validate that i should be an object
 
-### Delete
+  - Validate that it should contain a root node
 
-- Delete a note from storage by making a DELETE request with a unique id of a note to /api/v1/note
+  - Validate that it should contain nodes with the keys of value and children
 
-```BASH
-    http DELETE :4000/api/v1/note/201d5149-7736-42e1-a349-b6f3e641e735
-    HTTP/1.1 204 No Content
-    Connection: keep-alive
-    Date: Tue, 30 Jan 2018 08:28:47 GMT
-    X-Powered-By: Express
-```
+  - Validate that it should contain root value
 
-- A Get request with this id will now return an error 404.
+  - Validate that is should contain a root node with a child
 
-```BASH
-     http :4000/api/v1/note/201d5149-7736-42e1-a349-b6f3e641e735
-    HTTP/1.1 404 Not Found
-    Connection: keep-alive
-    Content-Length: 167
-    Content-Type: text/html; charset=utf-8
-    Date: Tue, 30 Jan 2018 08:30:12 GMT
-    ETag: W/"a7-vi2fSZmlczG1C4XL6S5hY+V1M+k"
-    X-Powered-By: Express
+  - Validate that find returns a value
 
-    Error: ENOENT: no such file or directory, open '../data/note/201d5149-7736-42e1-a349-b6f3e641e735.json'
-```
+  - Validate that removeByVal removes a value
+  
+  - Validate that find returns null for an empty tree 
 
+  - Validate that removeByVal returns null on an empty tree
+  
+#### Invalid
+
+- Validate that insert throws an error when val is undefined
+
+- Validate that find throws an error when val is undefined
+
+- Validate that removeByVal throws an error when val is undefined
+   
