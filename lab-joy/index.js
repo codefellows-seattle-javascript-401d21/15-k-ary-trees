@@ -3,12 +3,12 @@
 const Tree = require('./lib/tree');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
-let path = `${__dirname}/data/minimal.html`;
+// let path = `${__dirname}/data/minimal.html`;
 
 exports.parseHTML = path => {
     try { fs.accessSync(path); } catch (err) { throw new Error(err); }
     let tree = new Tree();
-    fs.readFileProm(path)
+    return fs.readFileProm(path)
         .then(buffer => buffer.toString())
         .then(str => {
             // set up tree structure
@@ -45,30 +45,6 @@ exports.parseHTML = path => {
                 }
             });
         })
-        .then(tree => {
-            console.log('## inside the .then: ', tree);
-            return tree;
-        })
         .catch(err => new Error(err));
-    return tree;
 };
-console.log('## return value: ', exports.parseHTML(path));
-
-/* Why is this happening?:
-
-## return value:  Tree { root: null }
-## inside the .then:  Tree {
-  root:
-   TreeNode {
-     value: { tag: 'html', content: '' },
-     children: [ [TreeNode], [TreeNode] ] } }
-
-If I put the return value as "return fs.readFileProm..." then I get this:
-
-## return value:  Promise {
-  _bitField: 0,
-  _fulfillmentHandler0: undefined,
-  _rejectionHandler0: undefined,
-  _promise0: undefined,
-  _receiver0: undefined }
-*/
+// exports.parseHTML(path).then(console.log);

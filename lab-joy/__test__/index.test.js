@@ -15,12 +15,22 @@ describe('#parseHTML Function', () => {
         expect(() => {
             reader.parseHTML('cats');
         }).toThrow();
+
+        expect(() => {
+            reader.parseHTML();
+        }).toThrow();
     });
 
     it('should return a tree object', () => {
-        console.log(reader.parseHTML(path));
-        // expect(typeof reader.parseHTML(path)).toBe('object');
-        // expect(reader.parseHTML(path).root.value.tag).toBe('html');
+        reader.parseHTML(path).then(result => expect(typeof result).toBe('object'));
+        reader.parseHTML(path).then(result => expect(result.root).toHaveProperty('value'));
+        reader.parseHTML(path).then(result => expect(result.root).toHaveProperty('children'));
     });
 
+    it('should parse the HTML and return the correct values and children for each node', () => {
+        reader.parseHTML(path).then(result => expect(result.root.value.tag).toBe('html'));
+        reader.parseHTML(path).then(result => expect(result.root.value.tag).not.toBe('cats'));
+        reader.parseHTML(path).then(result => expect(result.root.children[0].children[0].value.tag).toBe('title'));
+        reader.parseHTML(path).then(result => expect(result.root.children[0].children[0].value.content).toBe('minimal html to tree'));
+    });
 });
