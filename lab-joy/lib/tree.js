@@ -30,6 +30,7 @@ module.exports = class Tree {
             callback(current);
             current.children.map(child => queue.enqueue(child));
         }
+        return this;
     }
 
     // Insertion: O(n) - uses breadthFirst method to traverse through each node
