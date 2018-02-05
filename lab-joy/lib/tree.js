@@ -4,10 +4,11 @@ const Queue = require('./queue');
 
 const TreeNode = class {
     constructor(value) {
-        this.value = value;
+        // value: {tag: html, content: 'str'}
+        this.value = {'tag': value, 'content': ''},
         this.children = [];
     }
-}
+};
 
 module.exports = class Tree {
     constructor() {
@@ -41,7 +42,7 @@ module.exports = class Tree {
             return this;
         }
 
-        if (!parent) return 'Must declare parent node value if the tree already has a root.'
+        if (!parent) return 'Must declare parent node value if the tree already has a root.';
 
         let added = false;
         this.breadthFirst(node => {
@@ -74,5 +75,4 @@ module.exports = class Tree {
         });
         return removed ? 'Node was removed from tree' : 'Value was not found in tree.';
     }
-}
-
+};
