@@ -9,20 +9,9 @@ const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
     fs.readFileProm(`${__dirname}/data/minimal.html`)
         .then(buffer => buffer.toString())
         .then(str => {
-            // /\<(.*?)\>/g
+            // set up tree structure
             let arr = str.split(/\<(.*)\>/g).filter(el => el.trim()); //eslint-disable-line
             arr.shift();
-            // console.log(arr);
-
-            /*
-            Iterate through arr.
-                1. tree.insert(html)
-                2. iterate through arr[0] to current index
-                    a. if element begins with /, iterate thru again and splice out from el containing same name after / to the /.
-                    b. iterate thru again and find the first element not beginning with /. this is the parent. 
-            */
-            // get element tree structure first
-
             tree.insert(arr[0]);
             for (let i = 1; i < arr.length; i++) {
                 let current = arr[i];
@@ -32,7 +21,6 @@ const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
                     if (tempArr[j] && tempArr[j].indexOf('/') === -1) {
                         parent = tempArr[j];
                         if (current[0] !== '/') {
-                            // console.log(current, parent);
                             tree.insert(current, parent);
                         }
                         break;
@@ -49,8 +37,18 @@ const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
                     }
                 }
             }
-            console.log(tree.root.children[0].children);
-            // check for text content second
-
-        });
+        })
+        .then(() => {
+            // modify tree value to separate tags and content
+            tree.breadthFirst(node => {
+                let firstBracket = node.value.tag.indexOf('>');
+                if (firstBracket > -1) {
+                    let secondBracket = node.value.tag.indexOf('<');
+                    let content = node.value.tag.slice(firstBracket + 1, secondBracket);
+                    node.value.tag = node.value.tag.slice(0, firstBracket);
+                    node.value.content = content;
+                }
+            });
+        })
+        .catch(err => console.error(err));
 })();
