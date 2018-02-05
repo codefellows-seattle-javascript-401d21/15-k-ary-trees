@@ -1,19 +1,21 @@
 'use strict';
 
-const solution = require('../lib/solution');
+const parse = require('../lib/parse');
 
-describe('Solution test', function() {
+describe('parse test', function() {
 
-  this.minimal_asset =`${__dirname}/../../assets/minimal.html`;
-  this.stretch_asset =`${__dirname}/../../assets/stretch.html`;
+  //this.asset =`${__dirname}/../../assets/minimal.html`;
+  this.asset =`${__dirname}/../../assets/stretch.html`;
 
   describe('Valid input', () => {
     beforeAll(() => { 
-      return  solution.parseHtml(this.minimal_asset)
+      return  parse.parseHtml(this.asset)
         .then(tree => this.tree = tree);
     });
-   
+
+
     it('should return an object with a property of root invoked with a file path that contains html', () => {
+      console.log(JSON.stringify(this.tree));
       let root = this.tree.hasOwnProperty('root');
       expect(root).toBe(true);
     });
@@ -37,15 +39,14 @@ describe('Solution test', function() {
     
 
     it('should throw an error for undefined argument', () => {
-      return  solution.parseHtml(this.minimal_asset)
-        .catch( err => {
-          expect(err.mesage).toMatch(/invalid/i);
-        });
+      expect(() => {
+        parse.parseHtml();
+      }).toThrow();
     });
 
     it('should throw an error for non html file', () => {
       this.index =`${__dirname}/../index.js`;
-      return  solution.parseHtml(this.index)
+      return  parse.parseHtml(this.index)
         .catch( err => {
           expect(err.message).toMatch(/html/i);
         });
@@ -53,7 +54,7 @@ describe('Solution test', function() {
 
     it('should throw an error for a bad path', () => {
       this.index =`${__dirname}/../is`;
-      return  solution.parseHtml(this.index)
+      return  parse.parseHtml(this.index)
         .catch( err => {
           expect(err.message).toMatch(/enoent/i);
         });

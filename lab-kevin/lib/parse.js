@@ -8,17 +8,17 @@ const Tree = require('./kary');
 const parentStack = new Stack();
 const htmlTree = new Tree();
 
-const solution = module.exports = {};
+const parse = module.exports = {};
 
-solution.parseHtml = (asset) => {
+parse.parseHtml = (asset) => {
   if(!asset) throw new Error('Invalid input: expecting file path');
   return fs.readFileProm(asset, 'utf8')
-    .then(this.parsefile)
+    .then(parse.parsefile)
     .catch(console.error);
 };
 //Big-O O(1)
 
-this.parsefile = (html) => {  
+parse.parsefile = (html) => {  
   let isHtml = html.match(/<!DOCTYPE html>/gi) ? true : false;
   if (!isHtml) throw new Error('Invalid input: expecting html file');
   //split document up into lines and tags
@@ -26,14 +26,14 @@ this.parsefile = (html) => {
 
   //process each line, one at a time
   elements.forEach(elm => {
-    solution.processElement(elm);
+    parse.processElement(elm);
   });
   // big-O O(n)
 
   return htmlTree;
 };
 
-solution.processElement = (data) => { 
+parse.processElement = (data) => { 
   // the tag is a closing tag, an element off the stack
   if ( /^<\/[^<]+>$/.test(data) ) return parentStack.pop(); //closing tag 
 

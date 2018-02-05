@@ -37,7 +37,7 @@ describe('Kary Tests', function(){
           this.kt.insert(num, parent);
         });
       });
-      console.log(JSON.stringify(this.kt));
+  
     });
   
     it('Should be an object', () => {
@@ -107,21 +107,6 @@ describe('Kary Tests', function(){
         this.removeByVal.find();
       }).toThrow();
     });
-
-    
-    
-
-    // it('Should throw error if non tree is passed as input', () => {
-    //   expect(() => {
-    //     solution.jejune({});
-    //   }).toThrow('Invalid input:  expecting a tree structure');
-    // });
-
-    // it('Should throw error if bad input is passed', () => {
-    //   expect(() => {
-    //     solution.jejune('hello');
-    //   }).toThrow('Invalid input:  expecting a tree structure');
-    // });
 
   });
 
