@@ -1,16 +1,19 @@
 'use strict'
+const util = require('util')
 
 const Queue = require('./queue')
 
-const TreeNode = class {
-  constructor(val,value) {
+const TreeNode = module.exports = class {
+  constructor(val,value, depth) {
     this.val = val
-    this.children = [] // Scott haxored this! Feel free to stretch with the SLL! ;-)
     this.value = value
+    this.children = [] // Scott haxored this! Feel free to stretch with the SLL! ;-)
+    this.depth = depth
   }
 }
 
 const K_ary = module.exports = class {
+
   constructor() {
     this.root = null
   }
@@ -32,13 +35,10 @@ const K_ary = module.exports = class {
     }
   }
 
-  // Insertions
   insert(val, parent) {
 
 if(typeof val !== 'number') return null
 
-// console.log(this)
-    // console.log(parent)
     let tn = new TreeNode(val)
 
     if(!this.root) {
@@ -52,18 +52,15 @@ if(typeof val !== 'number') return null
         return
       }
     })
-    // console.log(this)
     return this
   }
 
 
-  insertInfo(val, parent, text) {
+  insertInfo(val, parent, text, childIndex) {
 
 if(typeof val !== 'number') return null
 
-// console.log(this)
-    // console.log(parent)
-    let tn = new TreeNode(val, text)
+    let tn = new TreeNode(val, text, parent)
 
     if(!this.root) {
       this.root = tn
@@ -76,14 +73,10 @@ if(typeof val !== 'number') return null
         return
       }
     })
-    // console.log(this)
+
     return this
   }
 
-
-
-  // Removals
   removeByVal(val) {
-    // Remove the first node you find that matches val
   }
 }

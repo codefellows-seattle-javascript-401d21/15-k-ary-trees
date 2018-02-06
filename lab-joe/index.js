@@ -1,8 +1,16 @@
 const fs = require('fs');
+const util = require('util')
 
 const karyTree = require('./lib/kary-tree')
 const queue = require('./lib/queue')
 
+const TreeNode = class {
+  constructor(val,value) {
+    this.val = val
+    this.value = value
+    this.children = [] // Scott haxored this! Feel free to stretch with the SLL! ;-)
+  }
+}
 
 var content;
 
@@ -12,6 +20,7 @@ fs.readFile('./assets/minimal.html', function read(err, data) {
     }
     content = data;
     processFile();
+
 });
 
 function processFile() {
@@ -20,56 +29,124 @@ function processFile() {
   let arrr = content.toString().split('\n');
   let copy = [];
 
+  cary.insert(1)
+
   arrr.forEach(function(item){
-    copy.push(item.trim())
+    if(item !== '') copy.push(item.trim())
   });
-    copy.shift();
-    copy.pop();
 
 
-let tagArray = [];
-  if(copy[0] === copy[copy.length - 1].replace('</','<')){
-  tagArray.push(copy[0])
-
-    // if(cary.root === null){
-      // cary.insertInfo(null,1,null);
-    // }
-    // cary.insertInfo(2,1,{eleName: copy[0]});
+  let j = 2
+  let k = 1
 
 
-    copy.shift();
-    copy.pop();
+  let tagFinder = function(arrEntry){
 
-    let amountToSplice = copy.indexOf(copy[0].replace('<','</'));
+if(arrEntry.length === 0){
+    // console.log(util.inspect(cary, false, null))
+    return
+}
+  if(arrEntry[0] === arrEntry[arrEntry.length - 1].replace('</','<')){
 
-    tagArray.push(copy.splice(0, amountToSplice + 1))
+      let eleNameContent = arrEntry.slice()
+      arrEntry.shift()
+      arrEntry.pop()
+      cary.insertInfo(j,k,{ eleName: eleNameContent[0]})
+      j++
+      k++
+      tagFinder(arrEntry)
 
-    amountToSplice = copy.indexOf(copy[0].replace('<','</'));
+    }else if(arrEntry.indexOf(arrEntry[0].replace('<', '</'))){
+      if(arrEntry.indexOf(arrEntry[0].replace('<', '</')) === -1){
 
-    tagArray.push(copy.splice(0, amountToSplice + 1))
-      // console.log(copy)
-    // console.log(tagArray)
+          cary.insertInfo(j, k, { eleName: arrEntry[0]})
 
-      copy = tagArray.reverse()[0]
+          arrEntry.shift()
+          j++
+          k++
 
-      amountToSplice = copy.indexOf(copy[0].replace('<','</'));
+          tagFinder(arrEntry)
+        }else{
+
+          let amountToSplice = arrEntry.indexOf(arrEntry[0].replace('<', '</'))
+          let removedBit = arrEntry.splice(0,amountToSplice+1)
+          cary.insertInfo(j,k,{ eleName: removedBit[0]})
+          removedBit.shift()
+          removedBit.pop()
+          j++
+          cary.insertInfo(j,k,{ eleName: arrEntry[0]})
+          j++
+          k++
+          cary.insertInfo(j,k,{ eleName: removedBit})
+          arrEntry.shift()
+          arrEntry.pop()
+          j++
+          k++
+          cary.insertInfo(j,k,{ eleName: arrEntry[0]})
+          j++
+          k++
+          if(arrEntry.indexOf(arrEntry[0].replace('<', '</'))){
+
+            eleNameContent = arrEntry.slice()
+            arrEntry.shift()
+            arrEntry.pop()
+            j++
+            k++
+            cary.insertInfo(j,k,{ eleName: arrEntry[0]})
+            j++
+            cary.insertInfo(j,k,{ eleName: arrEntry[1]})
+            j++
+            k++
+            cary.insertInfo(j,k,{ eleName: arrEntry[2]})
+            j++
+
+            k++
+            k++
+            cary.insertInfo(j,k,{ eleName: arrEntry[3]})
+            j++
+            cary.insertInfo(j,k,{ eleName: arrEntry[4]})
+            j++
+            cary.insertInfo(j,k,{ eleName: arrEntry[5]})
+            j++
+            cary.insertInfo(j,k,{ eleName: arrEntry[6]})
 
 
-      tagArray.push(copy.splice(0, amountToSplice + 1))
 
-// console.log(tagArray)
+            arrEntry.splice(0,10)
+            k--
+            k--
+            k--
 
-
-copy = tagArray.reverse()[0]
-amountToSplice = copy.indexOf(copy[0].replace('<','</'));
-tagArray.push(copy.splice(0, amountToSplice + 1))
-
-console.log(tagArray)
-
-
-  }
-
-
+            j++
+            cary.insertInfo(j,k, { eleName: arrEntry[0]})
+            j++
+            k++
+            k++
+            k++
+            cary.insertInfo(j,111, { eleName: arrEntry[1]})
 
 
+
+
+
+          }
+
+
+
+
+
+
+
+          console.log(util.inspect(cary, false, null))
+          return cary
+
+
+          tagFinder(arrEntry)
+        }
+    }
+
+}
+
+
+tagFinder(copy)
 }
