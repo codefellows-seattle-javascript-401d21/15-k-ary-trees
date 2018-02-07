@@ -21,7 +21,7 @@ function htmlTree(filePath){
       return res;
     })
     .then(res => parseHtml(res))
-    .catch(err => { throw new Error('Invalid input') });
+    .catch(() => { throw new Error('Invalid input'); });
 }
 
 function parseHtml(htmlData){

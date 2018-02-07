@@ -54,27 +54,27 @@ describe('Solution module', () => {
     describe('Valid input', () => {
       test('should return htmlTree instanceof k-ary Tree', () => {
         htmlTree(minimalHtmlFilePath)
-        .then(res => expect(res instanceof kTree).toBe(true))
+          .then(res => expect(res instanceof kTree).toBe(true));
       });
 
       test('should return a correct result', () => {
         htmlTree(minimalHtmlFilePath) 
-        .then(res => {
-          let i = 0;
-          res.breadthFirst(node => {
-            expect(node).toEqual(tags[i]);
-            i++;
-          })
-        })
+          .then(res => {
+            let i = 0;
+            res.breadthFirst(node => {
+              expect(node).toEqual(tags[i]);
+              i++;
+            });
+          });
       });
 
       test('each node should be an instanceof treeNode', () => {
         htmlTree(minimalHtmlFilePath)
-        .then( res => {
-          res.breadthFirst(node => {
-            expect(node instanceof treeNode).toBe(true);
-          })
-        })
+          .then( res => {
+            res.breadthFirst(node => {
+              expect(node instanceof treeNode).toBe(true);
+            });
+          });
       });
 
     });
@@ -82,17 +82,17 @@ describe('Solution module', () => {
     describe('Invalid input', () => {
       test('should throw an error if input content does not start with <!DOCTYPE html>', () => {
         htmlTree(invalidHtmlFilePath)
-        .catch(err => expect(err.message).toEqual('Invalid html'))
+          .catch(err => expect(err.message).toEqual('Invalid html'));
       });
 
       test('should throw an error if input content does not start with <html>', () => {
         htmlTree(secondInvalidHtmlFilePath)
-        .catch(err => expect(err.message).toEqual('Invalid html'))
+          .catch(err => expect(err.message).toEqual('Invalid html'));
       });
 
       test('should throw an error if input file does not exist', () => {
         htmlTree()
-        .catch(err => expect(err.message).toEqual('Invalid input'))
+          .catch(err => expect(err.message).toEqual('Invalid input'));
       });
     });
   });
