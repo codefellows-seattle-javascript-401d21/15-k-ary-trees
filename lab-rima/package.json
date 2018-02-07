@@ -1,0 +1,21 @@
+{
+  "name": "lab-rima",
+  "version": "1.0.0",
+  "description": "This is an assignment for cf-401",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest --verbose",
+    "lint": "eslint ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "bluebird": "^3.5.1",
+    "eslint": "^4.17.0",
+    "jest": "^22.1.4"
+  }
+}
