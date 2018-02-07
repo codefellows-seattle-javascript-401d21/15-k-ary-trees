@@ -1,7 +1,7 @@
 'use strict';
 
-const solution = require('./lib/solution');
+const parse = require('./lib/parse');
 
-module.exports = function(asset) {solution.parseHtml(asset);};
+module.exports = function(asset) {parse.parseHtml(asset);};
 
 

@@ -76,7 +76,7 @@ describe('Kary Tests', function(){
 
     describe('find in new kt', () => {
       it('should not find a value', () => {
-        expect(new KT().find(8).value).toBeNull();
+        expect(new KT().find(8)).toBeNull();
       });
     });
 

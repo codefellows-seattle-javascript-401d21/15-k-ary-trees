@@ -48,8 +48,8 @@ module.exports = class {
 
   find(val){
     if (val === undefined) throw new Error('Validation Error: value is undefined.');
-    if (!this.root) return this;
-    if (!this.root.children) return this;
+    if (!this.root) return null;
+    if (!this.root.value) return null;
 
     let  nodeVal = null;
     this.breadthFirst( node => {
