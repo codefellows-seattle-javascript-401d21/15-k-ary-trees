@@ -13,7 +13,7 @@ exports.parseHTML = path => {
         .then(str => {
             // set up tree structure
             let arr = str.split(/\<(.*)\>/g).filter(el => el.trim()); //eslint-disable-line
-            arr.shift();
+            if (arr[0] === '!DOCTYPE html') arr.shift();
             tree.insert(arr[0]);
             for (let i = 1; i < arr.length; i++) {
                 let current = arr[i], tempArr = arr.slice(0, i), parent;
@@ -39,7 +39,7 @@ exports.parseHTML = path => {
             return tree.breadthFirst(node => {
                 let firstBracket = node.value.tag.indexOf('>');
                 if (firstBracket > -1) {
-                    let secondBracket = node.value.tag.indexOf('<');
+                    let secondBracket = node.value.tag.lastIndexOf('<');
                     node.value.content = node.value.tag.slice(firstBracket + 1, secondBracket);
                     node.value.tag = node.value.tag.slice(0, firstBracket);
                 }
