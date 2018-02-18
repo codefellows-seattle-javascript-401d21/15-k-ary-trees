@@ -8,6 +8,7 @@ var elArray;
 
 elArray = fs.readFileSync('./assets/minimal.html', (err, data) => {
   if (err) throw err;
+  return data;
 });
 
 let newarray = parser(elArray);

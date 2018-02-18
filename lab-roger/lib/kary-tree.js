@@ -9,7 +9,7 @@ const TreeNode = class {
   }
 };
 
-const K_ary = module.exports = class {
+module.exports = class {
   constructor() {
     this.root = null;
   }
@@ -51,8 +51,5 @@ const K_ary = module.exports = class {
     return this;
   }
 
-  // Removals
-  removeByVal(val) {
-    // Remove the first node you find that matches val
-  }
+  
 };
