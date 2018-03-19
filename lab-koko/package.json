@@ -1,0 +1,29 @@
+{
+  "name": "kary",
+  "version": "1.0.0",
+  "description": "**Author**: Koko Kassa",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js",
+    "start:watch": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kowserk7/15-k-ary-trees.git"
+  },
+  "author": "Koko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kowserk7/15-k-ary-trees/issues"
+  },
+  "homepage": "https://github.com/kowserk7/15-k-ary-trees#readme",
+  "dependencies": {
+    "eslint": "^4.18.2",
+    "jest": "^23.0.0-alpha.0"
+  },
+  "devDependencies": {}
+}
