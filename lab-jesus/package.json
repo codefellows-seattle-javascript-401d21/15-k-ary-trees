@@ -1,0 +1,22 @@
+{
+  "name": "lab-jesus",
+  "version": "1.0.0",
+  "description": "Whiteboard Challenge 09 Write a function which accepts n and a linked list as it's arguments, and will return the nth from last node in a linked list",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest -i"
+  },
+  "author": "Jesus",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "jest": "^22.1.4"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "koa-json": "^2.0.2"
+  }
+}
